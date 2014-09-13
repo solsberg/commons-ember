@@ -1,4 +1,7 @@
 <h2>Sign in</h2>
-{{input value=email placeholder='Email'}}
-{{input type='password' value=password placeholder='Password'}}
-<button type="submit" {{action 'login'}}>Sign in</button>
+<form>
+  {{input class='email-field' value=email placeholder='Email'}}
+  {{input class='password-field' type='password' value=password placeholder='Password'}}
+  <button class='signin' type="submit" {{action 'login'}}>Sign in</button>
+</form>
+{{link-to 'Register' 'register' class='register'}}

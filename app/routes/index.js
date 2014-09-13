@@ -6,7 +6,7 @@ export default Ember.Route.extend({
       this.transitionTo('login');
     }
     else{
-      this.transitionTo('about')
+      this.transitionTo('about');
     }
   }
 });

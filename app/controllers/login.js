@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   email: '',
   password: '',
 
-  init: function(){
+  xinit: function(){
     var self = this;
     this.get('auth').addObserver('authorized', function(){
       self.transitionToRoute('index');
@@ -13,7 +13,13 @@ export default Ember.Controller.extend({
 
   actions: {
     login: function(){
-      this.get('auth').login(this.get('email'), this.get('password'));
+      var self = this;
+      this.userService.findByUsername(this.email).then(function(user){
+        self.get('auth').login(user.get('email'), self.get('password')).then(function(result){
+          self.transitionToRoute('index');
+        return result;
+        });
+      });
     }
   }
 });
