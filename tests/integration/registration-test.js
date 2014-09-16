@@ -18,6 +18,14 @@ module('Integration-Registration', {
     var auth = container.lookup('auth:main');
     auth.logout();
     auth.deleteUser(testUser.email, testUser.password);
+    var userService = container.lookup('service:user');
+    Ember.$(document).trigger('ajaxSend');
+    userService.findByUsername(testUser.username).then(function(user){
+    Ember.$(document).trigger('ajaxComplete');
+      if (user){
+        user.destroyRecord();
+      }
+    });
   },
 
   teardown: function(){

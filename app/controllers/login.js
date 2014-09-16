@@ -15,10 +15,9 @@ export default Ember.Controller.extend({
     login: function(){
       var self = this;
       this.userService.findByUsername(this.email).then(function(user){
-        self.get('auth').login(user.get('email'), self.get('password')).then(function(result){
-          self.transitionToRoute('index');
-        return result;
-        });
+        return self.get('auth').login(user.get('email'), self.get('password'));
+      }).then(function(/*result*/){
+        self.transitionToRoute('index');
       });
     }
   }

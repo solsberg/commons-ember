@@ -9,8 +9,6 @@ var auth = Ember.Object.extend({
   defer: null,
   init: function(){
     this.authClient = new window.FirebaseSimpleLogin(Ref, function(error, user){
-      // var callbacks = promiseCallbacks;
-      // promiseCallbacks = null;
       var defer = this.get('defer');
       var self = this;
       Ember.run(function(){
@@ -26,7 +24,6 @@ var auth = Ember.Object.extend({
         self.userService.findByUid(user.uid).then(function(found_user){
           self.set('current_user', found_user);
         });
-        // this.transitionTo('login');
         if (defer != null){
           defer.resolve({auth: true});
         }
@@ -37,8 +34,8 @@ var auth = Ember.Object.extend({
           defer.resolve({auth: true});
         }
       }
+      Ember.$(document).trigger('ajaxComplete');
       self.set('defer', null);
-      // Ember.run.end();
     });
     }.bind(this));
   },
@@ -51,22 +48,13 @@ var auth = Ember.Object.extend({
     }
     defer = Ember.RSVP.defer();
     this.set('defer', defer);
+
+    Ember.$(document).trigger('ajaxSend');
     self.authClient.login('password', {
       email: email,
       password: password
     });
     return defer.promise;
-    // return new Ember.RSVP.Promise(function(resolve, reject){
-    //   if (promiseCallbacks != null){
-    //     promiseCallbacks.reject();
-    //   }
-    //   promiseCallbacks = {resolve: resolve, reject: reject};
-    //   // Ember.run.start();
-    //   self.authClient.login('password', {
-    //     email: email,
-    //     password: password
-    //   });
-    // });
   },
 
   logout: function(){
@@ -84,7 +72,9 @@ var auth = Ember.Object.extend({
   createUser: function(email, password){
     var self = this;
     return new Ember.RSVP.Promise(function(resolve, reject){
+      Ember.$(document).trigger('ajaxSend');
       self.authClient.createUser(email, password, function(error, user){
+        Ember.$(document).trigger('ajaxComplete');
         if (error){
           reject(error);
         }

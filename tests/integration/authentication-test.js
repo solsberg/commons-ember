@@ -7,6 +7,9 @@ var App;
 module('Integration-Authentication', {
   setup: function(){
     App = startApp();
+    var container = App.__container__;
+    var auth = container.lookup('auth:main');
+    auth.logout();
   },
 
   teardown: function(){
@@ -22,11 +25,11 @@ test('successfully signing in', function(){
   });
 
   andThen(function(){
-    fillIn('input.email-field', 'simon@olsbergfamily.net');
+    fillIn('input.email-field', 'solsberg');
     fillIn('input.password-field', 'arsenal');
     click('button.signin');
   });
-  
+
   andThen(function(){
     equal(currentRouteName(), 'about');
   });

@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
 
   actions: {
     create: function(){
-      if (this.get('content').length == 0){
+      if (this.get('content').length === 0){
         return;
       }
 

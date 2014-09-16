@@ -15,8 +15,10 @@ export default Ember.Controller.extend({
           username: self.get('username'),
           fullname: self.get('fullname')
         });
+        Ember.$(document).trigger('ajaxSend');
         new_user.save().then(function(user){
           //login user
+          Ember.$(document).trigger('ajaxComplete');
           self.get('auth').login(user.get('email'), self.get('password')).then(function(/*result*/){
             self.transitionToRoute('index');
           });
