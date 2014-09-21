@@ -2,18 +2,16 @@ import Ember from 'ember';
 import { test } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 
-var App;
-
 module('Integration-Authentication', {
   setup: function(){
-    App = startApp();
-    var container = App.__container__;
-    var auth = container.lookup('auth:main');
-    auth.logout();
+    this.App = startApp();
   },
 
   teardown: function(){
-    Ember.run(App, App.destroy);
+    var container = this.App.__container__;
+    var auth = container.lookup('auth:main');
+    auth.logout();
+    Ember.run(this.App, this.App.destroy);
   }
 });
 
@@ -25,8 +23,8 @@ test('successfully signing in', function(){
   });
 
   andThen(function(){
-    fillIn('input.email-field', 'solsberg');
-    fillIn('input.password-field', 'arsenal');
+    fillIn('input.email-field', 'testuser');
+    fillIn('input.password-field', 'password');
     click('button.signin');
   });
 

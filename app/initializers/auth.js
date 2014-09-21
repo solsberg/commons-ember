@@ -11,6 +11,10 @@ var auth = Ember.Object.extend({
     this.authClient = new window.FirebaseSimpleLogin(Ref, function(error, user){
       var defer = this.get('defer');
       var self = this;
+      Ember.$(document).trigger('ajaxComplete');
+      if (this.get('isDestroyed')){
+        return;
+      }
       Ember.run(function(){
       if (error){
         // alert("Authentication failed: " + error);
@@ -34,7 +38,6 @@ var auth = Ember.Object.extend({
           defer.resolve({auth: true});
         }
       }
-      Ember.$(document).trigger('ajaxComplete');
       self.set('defer', null);
     });
     }.bind(this));
@@ -65,6 +68,7 @@ var auth = Ember.Object.extend({
     }
     defer = Ember.RSVP.defer();
     this.set('defer', defer);
+    Ember.$(document).trigger('ajaxSend');
     self.authClient.logout();
     return defer.promise;
   },

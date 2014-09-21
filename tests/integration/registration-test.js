@@ -2,26 +2,24 @@ import Ember from 'ember';
 import { test } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 
-var App;
-
 var testUser = {
-  username: 'testuser',
-  email: 'testuser@example.com',
+  username: 'otheruser',
+  email: 'otheruser@example.com',
   password: 'password',
-  fullname: 'Test User'
+  fullname: 'Other User'
 };
 
 module('Integration-Registration', {
   setup: function(){
-    App = startApp();
-    var container = App.__container__;
+    this.App = startApp();
+    var container = this.App.__container__;
     var auth = container.lookup('auth:main');
-    auth.logout();
+    this.auth = auth;
     auth.deleteUser(testUser.email, testUser.password);
     var userService = container.lookup('service:user');
     Ember.$(document).trigger('ajaxSend');
     userService.findByUsername(testUser.username).then(function(user){
-    Ember.$(document).trigger('ajaxComplete');
+      Ember.$(document).trigger('ajaxComplete');
       if (user){
         user.destroyRecord();
       }
@@ -29,7 +27,8 @@ module('Integration-Registration', {
   },
 
   teardown: function(){
-    Ember.run(App, App.destroy);
+    this.auth.logout();
+    Ember.run(this.App, this.App.destroy);
   }
 });
 
@@ -60,5 +59,4 @@ test('successfully register a new user', function(){
     ok(fullname_field);
     equal(fullname_field.text(), testUser.fullname);
   });
-
 });
