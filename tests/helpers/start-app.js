@@ -3,6 +3,7 @@
 var Application = require('commons/app')['default'];
 var Router = require('commons/router')['default'];
 import Ember from 'ember';
+import './authentication';
 
 export default function startApp(attrs) {
   var App;

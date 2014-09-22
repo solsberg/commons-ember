@@ -8,9 +8,7 @@ module('Integration-Authentication', {
   },
 
   teardown: function(){
-    var container = this.App.__container__;
-    var auth = container.lookup('auth:main');
-    auth.logout();
+    logout();
     Ember.run(this.App, this.App.destroy);
   }
 });

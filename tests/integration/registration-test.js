@@ -14,7 +14,6 @@ module('Integration-Registration', {
     this.App = startApp();
     var container = this.App.__container__;
     var auth = container.lookup('auth:main');
-    this.auth = auth;
     auth.deleteUser(testUser.email, testUser.password);
     var userService = container.lookup('service:user');
     Ember.$(document).trigger('ajaxSend');
@@ -27,7 +26,7 @@ module('Integration-Registration', {
   },
 
   teardown: function(){
-    this.auth.logout();
+    logout();
     Ember.run(this.App, this.App.destroy);
   }
 });
