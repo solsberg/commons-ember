@@ -1,7 +1,15 @@
 <h2>News & Needs</h2>
-<form>
-  <div>
-    {{textarea class='new-post' value=content placeholder="What's up with you?"}}
-  </div>
-  <button class='add-post' type="submit" {{action 'create'}}>Post Update</button>
-</form>
+<div class="col-md-offset-2 col-md-8">
+  <form>
+    <div>
+      {{textarea class='new-post' value=new_content placeholder="What's up with you?"}}
+    </div>
+    <button class='add-post' type="submit" {{action 'create'}}>Post Update</button>
+  </form>
+
+  <ul class="recent-news">
+    {{#each}}
+      <li class="news-item">{{content}}</li>
+    {{/each}}
+  </ul>
+</div>

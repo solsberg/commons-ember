@@ -1,19 +1,22 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  content: '',
+export default Ember.ArrayController.extend({
+  new_content: '',
 
+  sortProperties: ['timestamp'],
+  sortAscending: false,
+  
   actions: {
     create: function(){
-      if (this.get('content').length === 0){
+      var content = this.get('new_content');
+      if (content.length === 0){
         return;
       }
 
-      var new_post = this.store.createRecord('newsitem', {
-        content: this.get('content'),
-        user: this.auth.get('current_user').get('uid')
+      var self = this;
+      this.newsItemService.postItem(content, this.auth.get('current_user')).then(function(new_post){
+        self.get('model').addObject(new_post);
       });
-      new_post.save();
     }
   }
 });
