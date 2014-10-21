@@ -5,7 +5,7 @@ export default Ember.Object.extend({
 
   init: function(){
     var self = this;
-    var offsetRef = new Firebase("https://jmr-commons.firebaseio.com/.info/serverTimeOffset");
+    var offsetRef = new window.Firebase("https://jmr-commons.firebaseio.com/.info/serverTimeOffset");
     offsetRef.on("value", function(snap) {
       var offset = snap.val();
       self.set('serverTimeOffset', offset);
@@ -17,7 +17,7 @@ export default Ember.Object.extend({
     timestamp.setTime(timestamp.getTime() + this.get('serverTimeOffset'));
     var new_post = this.store.createRecord('newsitem', {
       content: content,
-      user: user.get('uid'),
+      user: user, //.get('uid'),
       timestamp: timestamp//window.Firebase.ServerValue.TIMESTAMP
     });
     return new_post.save();

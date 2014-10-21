@@ -8,8 +8,17 @@
   </form>
 
   <ul class="recent-news">
-    {{#each}}
-      <li class="news-item">{{content}}</li>
+    {{#each controller}}
+      <li class="news-item">
+        <div class='newsitem-avatar pull-left'>
+          <img {{bind-attr src=profileImageUrl}}>
+        </div>
+        <div class='newsitem-content'>
+          <div class='newsitem-header'>{{link-to user.fullname 'user.profile' user}} posted an update {{timeSincePosted}}</div>
+          <div class='newsitem-text'>{{text}}</div>
+        </div>
+        <div class='newsitem-footer'></div>
+      </li>
     {{/each}}
   </ul>
 </div>

@@ -5,4 +5,5 @@ export default DS.Model.extend({
   username: DS.attr('string'),
   email: DS.attr('string'),
   fullname: DS.attr('string')
+  // newsitems: DS.hasMany('newsitem', {async: true})
 });

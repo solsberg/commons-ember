@@ -10,6 +10,11 @@ Router.map(function() {
   this.route('profile');
   this.route('about');
   this.route('news');
+  this.resource('users', {path: '/members'}, function(){
+    this.resource('user', {path: '/:user_id'}, function(){
+      this.route('profile');
+    });
+  });
 });
 
 export default Router;

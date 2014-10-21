@@ -45,7 +45,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "logout"
+    "logout",
+    "moment"
   ],
   "node": false,
   "browser": false,

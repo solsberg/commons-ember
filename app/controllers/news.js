@@ -3,9 +3,10 @@ import Ember from 'ember';
 export default Ember.ArrayController.extend({
   new_content: '',
 
+  itemController: 'newsitem',
   sortProperties: ['timestamp'],
   sortAscending: false,
-  
+
   actions: {
     create: function(){
       var content = this.get('new_content');

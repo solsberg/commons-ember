@@ -26,6 +26,24 @@ ul.recent-news {
 
 li.news-item {
   border-top: #ccc solid 1px;
-  padding-bottom: 6px;
-  padding-top: 3px;
+  padding-bottom: 12px;
+  padding-top: 8px;
+}
+
+.newsitem-avatar {
+  padding-right: 10px;
+}
+
+.newsitem-content {
+  /*padding-left: 10px;*/
+}
+
+.newsitem-footer {
+  clear: both;
+}
+
+.newsitem-header {
+  color: #aaa;
+  font-size: smaller;
+  margin-bottom: 4px;
 }
