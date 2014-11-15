@@ -17,6 +17,7 @@ export default Ember.ArrayController.extend({
       var self = this;
       this.newsItemService.postItem(content, this.auth.get('current_user')).then(function(new_post){
         self.get('model').addObject(new_post);
+        self.set('new_content', '');
       });
     }
   }
