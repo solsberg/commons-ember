@@ -20,6 +20,9 @@ var app = new EmberApp();
 // app.import('bower_components/emberfire/dist/emberfire.js');
 app.import('bower_components/firebase-simple-login/firebase-simple-login.js');
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', {
+  destDir: 'assets'
+});
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/moment/moment.js');
 app.import('bower_components/blueimp-md5/js/md5.min.js');
