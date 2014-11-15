@@ -1,12 +1,12 @@
 {
-  "predef": {
-    "document": true,
-    "window": true,
-    "-Promise": true,
-    "CommonsENV": true,
-    "moment": true,
-    "md5": true
-  },
+  "predef": [
+    "document",
+    "window",
+    "-Promise",
+    "CommonsENV",
+    "moment",
+    "md5"
+  ],
   "browser" : true,
   "boss" : true,
   "curly": true,
