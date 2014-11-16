@@ -21,7 +21,7 @@ test('successfully signing in', function(){
   });
 
   andThen(function(){
-    fillIn('input.email-field', 'testuser');
+    fillIn('input.username-field', 'testuser');
     fillIn('input.password-field', 'password');
     click('button.signin');
   });

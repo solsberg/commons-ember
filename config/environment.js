@@ -27,8 +27,8 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     ENV.contentSecurityPolicy = {
-      'default-src': "'none'",
-      'script-src': "'self' 'unsafe-eval'", // Allow scripts from https://cdn.mxpnl.com
+      'default-src': "'none' https://*.firebaseio.com",
+      'script-src': "'self' 'unsafe-eval' https://*.firebaseio.com https://*.firebase.com", // Allow scripts from https://cdn.mxpnl.com
       'font-src': "'self'", // Allow fonts to be loaded from http://fonts.gstatic.com
       'connect-src': "'self' wss://*.firebaseio.com https://auth.firebase.com", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
       'img-src': "'self' data: http://www.gravatar.com",
