@@ -25,4 +25,14 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  #mailcatcher settings
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+  config.action_mailer.default_url_options = { :host => 'http://localhost:3000/' }
+  
+  config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Origin' => 'http://localhost:4200',
+      'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+    }
 end

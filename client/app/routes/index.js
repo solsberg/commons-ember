@@ -1,12 +1,9 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
-  beforeModel: function(){
-    if (!this.get('auth').get('authorized')){
-      this.transitionTo('login');
-    }
-    else{
-      this.transitionTo('about');
-    }
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  beforeModel: function(transition){
+    this._super(transition);
+    this.transitionTo('about');
   }
 });

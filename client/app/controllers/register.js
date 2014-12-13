@@ -1,30 +1,26 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  // email: '',
-  // password: '',
+  needs: ['notice'],
 
   actions: {
     register: function(){
       var self = this;
-      self.get('auth').createUser(self.get('email'), self.get('password')).then(function(user){
-        //create user model
-        var new_user = self.store.createRecord('user', {
-          uid: user.uid,
-          email: user.email,
-          username: self.get('username'),
-          fullname: self.get('fullname')
-        });
-        Ember.$(document).trigger('ajaxSend');
-        new_user.save().then(function(user){
-          //login user
-          Ember.$(document).trigger('ajaxComplete');
-          self.get('auth').login(user.get('email'), self.get('password')).then(function(/*result*/){
-            self.transitionToRoute('index');
-          });
-        });
+      self.get('auth').createUser({
+        email: self.get('email'),
+        password: self.get('password'),
+        password_confirmation: self.get('password_confirmation'),
+        username: self.get('username'),
+        fullname: self.get('fullname')
+      }).then(function(response){
+        var info = response;  
+        self.get('controllers.notice').set('message', "Your registration for an account on JMR Commons has been accepted. " +
+            "Please look for a confirmation email in your inbox and click on the link to activate your account.");
+        self.transitionToRoute('notice');
+        return info;
       }, function(error){
-        alert("registration error: " + error);
+        var err = error;
+        return err;
       });
     }
   }

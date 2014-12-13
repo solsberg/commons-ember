@@ -26,13 +26,19 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
+    ENV["simple-auth"] = {
+      crossOriginWhitelist: ['http://localhost:3000'],
+      routeAfterAuthentication: 'index',
+      authorizer: 'authorizer:custom'
+    };
+
     ENV.contentSecurityPolicy = {
-      'default-src': "'none' https://*.firebaseio.com",
-      'script-src': "'self' 'unsafe-eval' https://*.firebaseio.com https://*.firebase.com", // Allow scripts from https://cdn.mxpnl.com
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-eval'", // Allow scripts from https://cdn.mxpnl.com
       'font-src': "'self'", // Allow fonts to be loaded from http://fonts.gstatic.com
-      'connect-src': "'self' wss://*.firebaseio.com https://auth.firebase.com", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
+      'connect-src': "'self' http://localhost:3000", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
       'img-src': "'self' data: http://www.gravatar.com",
-      'style-src': "'self'", // Allow inline styles and loaded CSS from http://fonts.googleapis.com 
+      'style-src': "'self' 'unsafe-inline'", // Allow inline styles and loaded CSS from http://fonts.googleapis.com 
       'media-src': "'self'"
     }
   }

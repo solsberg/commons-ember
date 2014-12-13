@@ -32,6 +32,6 @@
     "glob": "^4.0.5"
   },
   "dependencies": {
-    "emberfire": "^1.1.3"
+    "ember-cli-simple-auth": "^0.7.2"
   }
 }

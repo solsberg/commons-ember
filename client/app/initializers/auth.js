@@ -1,47 +1,98 @@
 import Ember from 'ember';
+import AuthenticatorsBase from 'simple-auth/authenticators/base';
+import AuthorizersBase from 'simple-auth/authorizers/base';
 // import userService from '../services/user';
 
-var Ref = new window.Firebase('https://jmr-commons.firebaseio.com');
+var CustomAuthenticator = AuthenticatorsBase.extend({
+  authenticate: function(credentials) {
+    // var _this = this;
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      Ember.$.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/auth/sign_in',
+        data: {email: credentials.identification, password: credentials.password}
+      }).then(function(response, statusText, xhr){
+        Ember.run(function() {
+          resolve({
+            user: response.data,
+            auth_info: {
+              access_token: xhr.getResponseHeader('Access-Token'),
+              client: xhr.getResponseHeader('Client'),
+              expiry: xhr.getResponseHeader('Expiry')
+            }
+          });
+        });
+      }, function(xhr/*, status, error*/) {
+        Ember.run(function() {
+          reject(xhr.responseJSON || xhr.responseText);
+        });
+      });
+    });
+  },
+
+  restore: function(properties) {
+    var propertiesObject = Ember.Object.create(properties);
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      if (!Ember.isEmpty(propertiesObject.get('user'))) {
+        resolve(properties);
+      } else {
+        reject();
+      }
+    });
+  },
+
+  invalidate: function() {
+    return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
+      Ember.$.ajax({
+        type: 'DELETE',
+        url: 'http://localhost:3000/auth/sign_out'
+      }).then(function(){
+        resolve();
+      }, function(){
+        resolve();
+      });
+    });
+  }
+});
+
+var CustomAuthorizer = AuthorizersBase.extend({
+  authorize: function(jqXHR, requestOptions) {
+    var session = this.get('session');
+    // requestOptions = requestOptions;
+    if (this.get('session.isAuthenticated')){
+      jqXHR.setRequestHeader('uid', session.get('user.uid'));
+      jqXHR.setRequestHeader('access_token', session.get('auth_info.access_token'));
+      jqXHR.setRequestHeader('token_type', 'Bearer');
+      jqXHR.setRequestHeader('client', session.get('auth_info.client'));
+      jqXHR.setRequestHeader('expiry', session.get('auth_info.expiry'));
+
+      var complete = requestOptions.complete;
+      requestOptions.complete = function(jqXHR_resp, textStatus){
+        var access_token = jqXHR_resp.getResponseHeader('Access-Token');
+        if (access_token !== undefined){
+          session.set('auth_info.access_token', access_token);
+        }
+        var client = jqXHR_resp.getResponseHeader('Client');
+        if (client !== undefined){
+          session.set('auth_info.client', client);
+        }
+        var expiry = jqXHR_resp.getResponseHeader('Expiry');
+        if (expiry !== undefined){
+          session.set('auth_info.expiry', expiry);
+        }
+        if (complete !== undefined){
+          complete(jqXHR_resp, textStatus);
+        }
+      };
+    }
+  }
+});
 
 var auth = Ember.Object.extend({
-  authorized: false,
+  authorized: function(){
+    return this.get('session.isAuthenticated');
+  }.property(),
   current_user: null,
-  defer: null,
-  init: function(){
-    this.authClient = new window.FirebaseSimpleLogin(Ref, function(error, user){
-      var defer = this.get('defer');
-      var self = this;
-      Ember.$(document).trigger('ajaxComplete');
-      if (this.get('isDestroyed')){
-        return;
-      }
-      Ember.run(function(){
-      if (error){
-        // alert("Authentication failed: " + error);
-        if (defer != null){
-          defer.reject(error);
-        }
-      }
-      else if (user){
-        //find user model
-        self.set('authorized', true);
-        self.userService.findByUid(user.uid).then(function(found_user){
-          self.set('current_user', found_user);
-        });
-        if (defer != null){
-          defer.resolve({auth: true});
-        }
-      }
-      else{
-        self.set('authorized', false);
-        if (defer != null){
-          defer.resolve({auth: true});
-        }
-      }
-      self.set('defer', null);
-    });
-    }.bind(this));
-  },
 
   login: function(email, password){
     var self = this;
@@ -73,19 +124,13 @@ var auth = Ember.Object.extend({
     return defer.promise;
   },
 
-  createUser: function(email, password){
-    var self = this;
-    return new Ember.RSVP.Promise(function(resolve, reject){
-      Ember.$(document).trigger('ajaxSend');
-      self.authClient.createUser(email, password, function(error, user){
-        Ember.$(document).trigger('ajaxComplete');
-        if (error){
-          reject(error);
-        }
-        else{
-          resolve(user);
-        }
-      });
+  createUser: function(params){
+    // var self = this;
+    params.confirm_success_url = 'http://localhost:4200/activate';
+    return Ember.$.ajax({
+      url: 'http://localhost:3000/auth/',
+      type: 'POST',
+      data: params
     });
   },
 
@@ -99,7 +144,10 @@ export default {
 
   initialize: function(container, app) {
     window.App = app;
+    app.register('authenticator:custom', CustomAuthenticator);
+    app.register('authorizer:custom', CustomAuthorizer);
     app.register('auth:main', auth, {singleton: true});
+    app.inject('auth:main', 'session', 'simple-auth-session:main');
     app.inject('controller', 'auth', 'auth:main');
     app.inject('route', 'auth', 'auth:main');
   }

@@ -1,12 +1,5 @@
 import Ember from 'ember';
+import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
-export default Ember.Route.extend({
-  actions: {
-    logout: function(){
-      var self = this;
-      this.get('auth').logout().then(function(){
-        self.transitionTo('index');
-      });
-    }
-  }
+export default Ember.Route.extend(ApplicationRouteMixin, {
 });

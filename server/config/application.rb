@@ -26,5 +26,15 @@ module Commonsapi
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins 'localhost:4200'
+        resource '*', 
+            :headers => :any, 
+            :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+            :methods => [:get, :post, :put, :delete, :options]
+      end
+    end
   end
 end

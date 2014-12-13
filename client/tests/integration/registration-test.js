@@ -12,27 +12,34 @@ var testUser = {
 module('Integration-Registration', {
   setup: function(){
     this.App = startApp();
-    var container = this.App.__container__;
-    var auth = container.lookup('auth:main');
-    auth.deleteUser(testUser.email, testUser.password);
-    var userService = container.lookup('service:user');
-    Ember.$(document).trigger('ajaxSend');
-    userService.findByUsername(testUser.username).then(function(user){
-      Ember.$(document).trigger('ajaxComplete');
-      if (user){
-        user.destroyRecord();
-      }
+    logout();
+    Ember.$.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/auth/sign_in',
+      data: {email: testUser.email, password: testUser.password}
+    }).then(function(response, statusText, xhr){
+      statusText = statusText;
+      return Ember.$.ajax({
+        type: 'DELETE',
+        url: 'http://localhost:3000/auth',
+        beforeSend: function(xhr2){
+          xhr2.setRequestHeader('uid', response.data.uid);
+          xhr2.setRequestHeader('access_token', xhr.getResponseHeader('Access-Token'));
+          xhr2.setRequestHeader('token_type', 'Bearer');
+          xhr2.setRequestHeader('client', xhr.getResponseHeader('Client'));
+          xhr2.setRequestHeader('expiry', xhr.getResponseHeader('Expiry'));
+        }
+      });
     });
   },
 
   teardown: function(){
-    logout();
     Ember.run(this.App, this.App.destroy);
   }
 });
 
 test('successfully register a new user', function(){
-  expect(4);
+  expect(3);
   visit('/');
   andThen(function(){
     equal(currentRouteName(), 'login');
@@ -50,12 +57,18 @@ test('successfully register a new user', function(){
   fillIn('input.fullname-field', testUser.fullname);
   click('button.register');
 
-  visit('/');
-  click('a.profile');
-
   andThen(function(){
-    var fullname_field = find(".fullname-field");
-    ok(fullname_field);
-    equal(fullname_field.text(), testUser.fullname);
+    var notice = find('.notice-content');
+    // ok(notice);
+    ok(notice.text().indexOf('look for a confirmation email') >= 0);
   });
+
+  // visit('/');
+  // click('a.profile');
+
+  // andThen(function(){
+  //   var fullname_field = find(".fullname-field");
+  //   ok(fullname_field);
+  //   equal(fullname_field.text(), testUser.fullname);
+  // });
 });

@@ -3,10 +3,11 @@ import Ember from 'ember';
 var authenticationHelpers = function(){
   Ember.Test.registerAsyncHelper('logout',
     function(app) {
-      // click('.logout');
       var container = app.__container__;
-      var auth = container.lookup('auth:main');
-      auth.logout();
+      var session = container.lookup('simple-auth-session:main');
+      if (session.isAuthenticated){
+        session.invalidate();
+      }
       return wait();
     }
   );

@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Object.extend({
   serverTimeOffset: 0,
 
-  init: function(){
+  initx: function(){
     var self = this;
     var offsetRef = new window.Firebase("https://jmr-commons.firebaseio.com/.info/serverTimeOffset");
     offsetRef.on("value", function(snap) {
