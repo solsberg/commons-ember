@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209013644) do
+ActiveRecord::Schema.define(version: 20141213221820) do
+
+  create_table "newsitems", force: true do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "newsitems", ["user_id"], name: "index_newsitems_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "provider",                            null: false

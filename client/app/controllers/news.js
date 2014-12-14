@@ -15,9 +15,16 @@ export default Ember.ArrayController.extend({
       }
 
       var self = this;
-      this.newsItemService.postItem(content, this.auth.get('current_user')).then(function(new_post){
-        self.get('model').addObject(new_post);
-        self.set('new_content', '');
+
+      this.store.find('user', {uid: this.get('session.user.uid')}).then(function(users){
+        var user = users.get('firstObject');
+        var new_item = self.store.createRecord('newsitem', {
+          content: content,
+          user: user
+        });
+        new_item.save().then(function(){
+          self.set('new_content', '');
+        });
       });
     }
   }
