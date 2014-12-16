@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import AuthenticatorsBase from 'simple-auth/authenticators/base';
 import AuthorizersBase from 'simple-auth/authorizers/base';
+import config from '../config/environment';
 // import userService from '../services/user';
 
 var CustomAuthenticator = AuthenticatorsBase.extend({
@@ -9,7 +10,7 @@ var CustomAuthenticator = AuthenticatorsBase.extend({
     return new Ember.RSVP.Promise(function(resolve, reject) {
       Ember.$.ajax({
         type: 'POST',
-        url: 'http://localhost:3000/auth/sign_in',
+        url: config.authHost + '/auth/sign_in',
         data: {email: credentials.identification, password: credentials.password}
       }).then(function(response, statusText, xhr){
         Ember.run(function() {
@@ -45,7 +46,7 @@ var CustomAuthenticator = AuthenticatorsBase.extend({
     return new Ember.RSVP.Promise(function(resolve/*, reject*/) {
       Ember.$.ajax({
         type: 'DELETE',
-        url: 'http://localhost:3000/auth/sign_out'
+        url: config.authHost + '/auth/sign_out'
       }).then(function(){
         resolve();
       }, function(){
@@ -127,7 +128,7 @@ var auth = Ember.Object.extend({
     // var self = this;
     params.confirm_success_url = 'http://localhost:4200/activate';
     return Ember.$.ajax({
-      url: 'http://localhost:3000/auth/',
+      url: config.authHost + '/auth/',
       type: 'POST',
       data: params
     });

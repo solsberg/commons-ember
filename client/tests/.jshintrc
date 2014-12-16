@@ -46,7 +46,10 @@
     "currentPath",
     "currentRouteName",
     "logout",
-    "moment"
+    "moment",
+    "fakeLogin",
+    "fakeLogout",
+    "Pretender"
   ],
   "node": false,
   "browser": false,

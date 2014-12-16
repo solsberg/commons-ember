@@ -26,8 +26,11 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
+    ENV.apiHost = 'http://localhost:3000';
+    ENV.authHost = ENV.apiHost;
+
     ENV["simple-auth"] = {
-      crossOriginWhitelist: ['http://localhost:3000'],
+      crossOriginWhitelist: [ENV.apiHost],
       routeAfterAuthentication: 'index',
       authorizer: 'authorizer:custom'
     };
@@ -36,11 +39,12 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-eval'", // Allow scripts from https://cdn.mxpnl.com
       'font-src': "'self'", // Allow fonts to be loaded from http://fonts.gstatic.com
-      'connect-src': "'self' http://localhost:3000", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
+      'connect-src': "'self' " + ENV.apiHost, // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
       'img-src': "'self' data: http://www.gravatar.com",
       'style-src': "'self' 'unsafe-inline'", // Allow inline styles and loaded CSS from http://fonts.googleapis.com 
       'media-src': "'self'"
-    }
+    };
+
   }
 
   if (environment === 'test') {
@@ -51,6 +55,9 @@ module.exports = function(environment) {
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
+
+    ENV.apiHost = '';
+    ENV.authHost = 'http://localhost:3000';
 
     ENV.APP.rootElement = '#ember-testing';
   }
