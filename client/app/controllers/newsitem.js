@@ -3,7 +3,7 @@ import {makeUrl} from '../services/gravatar';
 
 export default Ember.ObjectController.extend({
   text: function(){
-    return this.get('content').get('content');
+    return this.get('content.content');
   }.property('content'),
 
   timeSincePosted: function(){
@@ -11,7 +11,6 @@ export default Ember.ObjectController.extend({
   }.property('timestamp'),
 
   profileImageUrl: function(){
-    var user = this.get('user');
-    return makeUrl(user.get('email'));
+    return makeUrl(this.get('user.email'));
   }.property('user.email')
 });
