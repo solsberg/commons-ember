@@ -1,5 +1,6 @@
 html, body {
   /*margin: 20px;*/
+  background-color: #f1f1f1;
 }
 
 .masthead {
@@ -46,4 +47,32 @@ li.news-item {
   color: #aaa;
   font-size: smaller;
   margin-bottom: 4px;
+}
+
+.login-pane {
+  text-align: center;
+  padding-top: 5%;
+}
+
+.login-pane .logo {
+  padding: 22px;
+}
+
+.login-pane .message {
+  margin: 15px 40px;
+}
+
+.login-pane form {
+  background-color: white;
+  padding: 30px 30px 60px 30px;
+  text-align: left;
+}
+
+.login-pane .nav {
+  text-align: left;
+  margin: 15px 25px;
+}
+
+.login-pane .nav a {
+  color: #999;
 }
