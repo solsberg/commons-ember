@@ -1,25 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 .DS_Store
 
-# compiled output
-client/dist
-client/tmp
-
-# dependencies
-client/node_modules
-client/bower_components
-
-# misc
-client/.sass-cache
-/connect.lock
-/coverage/*
-/libpeerconnection.log
-client/npm-debug.log
-client/testem.log
-
-
-
-
 #server
 
 # Ignore bundler config.
