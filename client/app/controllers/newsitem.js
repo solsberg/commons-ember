@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import {makeUrl} from '../services/gravatar';
+import moment from 'npm:moment';
 
 export default Ember.ObjectController.extend({
   text: function(){

@@ -1,5 +1,6 @@
 import { test, moduleFor } from 'ember-qunit';
 import Ember from 'ember';
+import moment from 'npm:moment';
 
 var newsitem = {
   content: "this is the content",
