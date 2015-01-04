@@ -76,3 +76,7 @@ li.news-item {
 .login-pane .nav a {
   color: #999;
 }
+
+ul.profile-questions {
+  list-style: none;
+}

@@ -1,17 +1,24 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  initx: function(){
+  model: function(){
     var self = this;
-    this.get('auth').addObserver('current_user', function(){
-      //in case current user set after controller initialized
-      if (self.controller){
-        self.controller.set('model', self.get('auth').get('current_user'));
-      }
+    return new Ember.RSVP.Promise(function(resolve){
+      //get user model
+      self.store.find('user', {uid: self.get('session.user.uid')}).then(function(users){
+        var user = users.get('firstObject');
+        user.get('profile_responses').then(function(responses){
+          //users have responses
+          self.store.find('profile-question').then(function(questions){
+            resolve(questions.map(function(question){
+              return {
+                question: question,
+                response: responses.findBy('question_id', parseInt(question.get('id'), 10))
+              };
+            }));
+          });
+        });
+      });
     });
-  },
-
-  setupController: function(controller){
-    controller.set('model', this.get('session.user'));
   }
 });

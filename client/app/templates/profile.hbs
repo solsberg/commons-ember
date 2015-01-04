@@ -1,6 +1,7 @@
 <h2>Profile</h2>
-<ul>
-  <li>
+<form>
+<ul class='profile-questions'>
+{{!--   <li>
     Username:
     <span>{{username}}</span>
   </li>
@@ -8,4 +9,12 @@
     Full name:
     <span class='fullname-field'>{{fullname}}</span>
   </li>
+ --}}
+  {{#each}}
+    <li>
+      {{partial 'profile-field'}}
+    </li>
+  {{/each}}
 </ul>
+<button class='save-changes btn btn-primary pull-right' type="submit" {{action 'saveChanges'}}>Save Changes</button>
+</form>
