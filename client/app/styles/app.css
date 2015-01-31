@@ -80,3 +80,15 @@ li.news-item {
 ul.profile-questions {
   list-style: none;
 }
+
+ul.profile-questions .help-block {
+  font-size: smaller;
+}
+
+#profile-form button.save-changes {
+  margin-bottom: 20px;
+}
+
+.tab-pane {
+  padding-top: 20px;
+}

@@ -1,20 +1,25 @@
+<div id="profile-form" class="col-md-10 col-md-offset-1">
 <h2>Profile</h2>
 <form>
-<ul class='profile-questions'>
-{{!--   <li>
-    Username:
-    <span>{{username}}</span>
-  </li>
-  <li>
-    Full name:
-    <span class='fullname-field'>{{fullname}}</span>
-  </li>
- --}}
-  {{#each}}
-    <li>
-      {{partial 'profile-field'}}
-    </li>
-  {{/each}}
-</ul>
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist" id="myTab">
+    {{#each}}
+      <li role="presentation"><a {{bind-attr href=dom_href}} {{bind-attr aria-controls=dom_id}} role="tab" data-toggle="tab">{{section.title}}</a></li>
+    {{/each}}
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    {{#each}}
+    <div role="tabpanel" class="tab-pane" {{bind-attr id=dom_id}}>
+      {{#each fields}}
+        {{partial 'profile-field'}}
+      {{/each}}
+    </div>
+    {{/each}}
+  </div>
+
+</div>
 <button class='save-changes btn btn-primary pull-right' type="submit" {{action 'saveChanges'}}>Save Changes</button>
 </form>
+</div>

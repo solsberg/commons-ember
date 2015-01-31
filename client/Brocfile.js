@@ -23,5 +23,6 @@ app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', {
 });
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/blueimp-md5/js/md5.min.js');
+app.import('bower_components/ember-computed-content-controller/ember-computed-content-controller.js');
 
 module.exports = app.toTree();
