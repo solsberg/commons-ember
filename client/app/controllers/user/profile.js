@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-  itemController: 'profile-section',
+  itemController: 'user/profile-section',
   sortProperties: ['section.order'],
 
   actions: {

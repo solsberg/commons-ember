@@ -8,7 +8,7 @@ export default Ember.ObjectController.extend({
     return '#section-' + this.get('section.id');
   }.property(),
 
-  fields: Ember.computed.contentController('profile-fields', 'content.fields'),
+  fields: Ember.computed.contentController('user/profile-fields', 'content.fields'),
 
   saveChanges: function(){
     this.get('fields').forEach(function(item){

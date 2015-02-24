@@ -10,7 +10,6 @@ Router.map(function() {
   this.route('register');
   this.route('activate');
   this.route('notice');
-  this.route('profile');
   this.route('about');
   this.route('news');
   this.resource('users', {path: '/members'}, function(){
