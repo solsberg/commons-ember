@@ -6,7 +6,7 @@ export default Ember.ObjectController.extend({
     if (response !== undefined) {
       this.set('current_text', response.get('text'));
       if (this.get('is_date')) {
-        this.set('current_date', this.get('current_text'));
+        this.set('current_date', new Date(this.get('current_text')));
       }
     }
   },
@@ -39,7 +39,7 @@ export default Ember.ObjectController.extend({
     if (this.get('is_date')) {
       var date = this.get('current_date');
       return (response === undefined && date ||
-        response !== undefined && date !== new Date(response.get('text')));
+        response !== undefined && date.toUTCString() !== response.get('text'));
     }
     var text = this.get('current_text').trim();
     return (response === undefined && text !== '' ||
@@ -62,7 +62,7 @@ export default Ember.ObjectController.extend({
 
         if (response === undefined){
           response = this.store.createRecord('profile-response', {
-            question_id: this.get('question.id'),
+            questionId: this.get('question.id'),
             user: this.get('user')
           });
         }
@@ -81,7 +81,7 @@ export default Ember.ObjectController.extend({
 
       if (response === undefined){
         response = this.store.createRecord('profile-response', {
-          question_id: this.get('question.id'),
+          questionId: this.get('question.id'),
           user: this.get('user')
         });
       }

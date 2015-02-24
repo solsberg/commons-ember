@@ -1,5 +1,10 @@
 class ProfileResponsesController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
+
+  def index
+    user = User.find(params[:user_id])
+    render json: user.profile_responses
+  end
 
   def show
     response = ProfileResponse.find(params[:id])

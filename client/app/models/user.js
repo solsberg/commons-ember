@@ -5,6 +5,6 @@ export default DS.Model.extend({
   username: DS.attr('string'),
   email: DS.attr('string'),
   fullname: DS.attr('string'),
-  profile_responses: DS.hasMany('profile-response', {async: true})
+  profileResponses: DS.hasMany('profile-response', {async: true})
   // newsitems: DS.hasMany('newsitem', {async: true})
 });

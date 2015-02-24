@@ -6,7 +6,7 @@ export default Ember.Object.extend({
         store = this.get('store');
     return new Ember.RSVP.Promise(function(resolve){
       Ember.RSVP.hash({
-        responses: user.get('profile_responses'),
+        responses: user.get('profileResponses'),
         sections: store.find('profile-section'),
         questions: store.find('profile-question')
       }).then(function(results){
@@ -16,7 +16,7 @@ export default Ember.Object.extend({
             fields: section.get('questions').map(function(question){
               return {
                 question: question,
-                response: results.responses.findBy('question_id', parseInt(question.get('id'), 10)),
+                response: results.responses.findBy('questionId', parseInt(question.get('id'), 10)),
                 user: user
               };
             })

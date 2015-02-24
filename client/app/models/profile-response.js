@@ -2,6 +2,6 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   text: DS.attr('string'),
-  question_id: DS.attr('number'),
+  questionId: DS.attr('number'),
   user: DS.belongsTo('user')
 });
