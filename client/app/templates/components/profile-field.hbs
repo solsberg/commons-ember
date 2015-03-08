@@ -1,0 +1,14 @@
+<label {{bind-attr for=dom_id}}>{{question.text}}</label>
+{{#if has_help}}
+<span {{bind-attr id=help_id}} class="help-block">{{question.description}}</span>
+{{/if}}
+
+{{#if is_text_area}}
+  {{textarea id=dom_id class='form-control' value=current_text aria-describedby=help_id rows="3"}}
+{{else}}
+  {{#if is_date}}
+    {{bootstrap-datepicker id=dom_id class='form-control' value=current_date aria-describedby=help_id autoclose=true}}
+  {{else}}
+    {{input id=dom_id class='form-control' type=question.type value=current_text aria-describedby=help_id}}
+  {{/if}}
+{{/if}}

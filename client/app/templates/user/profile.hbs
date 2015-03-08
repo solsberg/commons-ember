@@ -13,7 +13,8 @@
     {{#each}}
     <div role="tabpanel" class="tab-pane" {{bind-attr id=dom_id}}>
       {{#each fields}}
-        {{partial 'user/profile-field'}}
+        {{!-- {{partial 'user/profile-field'}} --}}
+        {{profile-field question=question response=response}}
       {{/each}}
     </div>
     {{/each}}
