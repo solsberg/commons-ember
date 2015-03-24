@@ -9,6 +9,6 @@
   {{#if is_date}}
     {{bootstrap-datepicker id=dom_id class='form-control' value=current_date aria-describedby=help_id autoclose=true}}
   {{else}}
-    {{input id=dom_id class='form-control' type=question.type value=current_text aria-describedby=help_id}}
+    {{input id=dom_id class='form-control' type=question.type value=current_text aria-describedby=help_id focus-out="onTextEdit"}}
   {{/if}}
 {{/if}}

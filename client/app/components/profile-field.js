@@ -3,14 +3,15 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['form-group'],
   
-  willInsertElement: function(){
+  didInsertElement: function(){
     var response = this.get('response');
     if (response !== undefined) {
-      this.set('current_text', response.get('text'));
+      this.set('current_text', response);
       if (this.get('is_date')) {
         this.set('current_date', new Date(this.get('current_text')));
       }
     }
+    this.saveCurrentValue();
   },
 
   dom_id: function(){
@@ -34,6 +35,7 @@ export default Ember.Component.extend({
   }.property('type'),
 
   current_text: '',
+  prev_text: '',
   current_date: null,
 
   // isDirty: function() {
@@ -92,5 +94,17 @@ export default Ember.Component.extend({
   //   }
   // }
 
-  dummy: ''
+  saveCurrentValue: function(){
+    this.set('prev_text', this.get('current_text'));
+  },
+
+  actions: {
+    onTextEdit: function(){
+      if (this.get('prev_text') !== this.get('current_text')){
+        console.log('text edited');
+        this.sendAction('action', this.get('question'), this.get('current_text'));
+        this.saveCurrentValue();
+      }
+    }
+  }
 });

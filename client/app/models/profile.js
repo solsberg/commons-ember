@@ -10,18 +10,20 @@ export default Ember.Object.extend({
         sections: store.find('profile-section'),
         questions: store.find('profile-question')
       }).then(function(results){
-        resolve(results.sections.map(function(section){
-          return {
-            section: section,
-            fields: section.get('questions').map(function(question){
-              return {
-                question: question,
-                response: results.responses.findBy('questionId', parseInt(question.get('id'), 10)),
-                user: user
-              };
-            })
-          };
-        }));
+        resolve({
+          user: user,
+          sections: results.sections.map(function(section){
+            return {
+              section: section,
+              fields: section.get('questions').map(function(question){
+                return {
+                  question: question,
+                  response: results.responses.findBy('questionId', parseInt(question.get('id'), 10))
+                };
+              })
+            };
+          })
+        });
       });
     });
   })
