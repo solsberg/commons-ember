@@ -16,19 +16,18 @@ moduleFor('controller:newsitem', 'NewsitemController', {
   }
 });
 
-test('it has a text', function() {
+test('it has a text', function(assert) {
   var controller = this.subject();
-  equal(controller.get('text'), newsitem.content);
+  assert.equal(controller.get('text'), newsitem.content);
 });
 
-test('it displays the time since posted', function() {
+test('it displays the time since posted', function(assert) {
   var controller = this.subject();
-  equal(controller.get('timeSincePosted'), "3 hours ago");
+  assert.equal(controller.get('timeSincePosted'), "3 hours ago");
 });
 
-test('it calculates a gravatar image url', function(){
+test('it calculates a gravatar image url', function(assert){
   var controller = this.subject();
   var expected_url = "http://www.gravatar.com/avatar/" + md5(newsitem.user.email.trim().toLowerCase());
-  equal(controller.get('profileImageUrl'), expected_url);
-  
+  assert.equal(controller.get('profileImageUrl'), expected_url);
 });

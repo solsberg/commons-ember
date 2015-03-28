@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { test } from 'ember-qunit';
+import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 
 var testUser = {
@@ -46,11 +46,11 @@ module('Integration-Authentication', {
   }
 });
 
-test('successfully signing in', function(){
-  expect(2);
+test('successfully signing in', function(assert){
+  assert.expect(2);
   visit('/');
   andThen(function(){
-    equal(currentRouteName(), 'login');
+    assert.equal(currentRouteName(), 'login');
   });
 
   andThen(function(){
@@ -60,6 +60,6 @@ test('successfully signing in', function(){
   });
 
   andThen(function(){
-    equal(currentRouteName(), 'about');
+    assert.equal(currentRouteName(), 'about');
   });
 });

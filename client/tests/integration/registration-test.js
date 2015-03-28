@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { test } from 'ember-qunit';
+import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 
 var testUser = {
@@ -38,16 +38,16 @@ module('Integration-Registration', {
   }
 });
 
-test('successfully register a new user', function(){
-  expect(3);
+test('successfully register a new user', function(assert){
+  assert.expect(3);
   visit('/');
   andThen(function(){
-    equal(currentRouteName(), 'login');
+    assert.equal(currentRouteName(), 'login');
   });
 
   click('a.register');
   andThen(function(){
-    equal(currentRouteName(), 'register');
+    assert.equal(currentRouteName(), 'register');
   });
 
   fillIn('input.username-field', testUser.username);
@@ -60,7 +60,7 @@ test('successfully register a new user', function(){
   andThen(function(){
     var notice = find('.notice-content');
     // ok(notice);
-    ok(notice.text().indexOf('look for a confirmation email') >= 0);
+    assert.ok(notice.text().indexOf('look for a confirmation email') >= 0);
   });
 
   // visit('/');

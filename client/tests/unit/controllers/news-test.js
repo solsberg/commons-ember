@@ -34,7 +34,7 @@ moduleFor('controller:news', 'NewsController', {
   }
 });
 
-test('it creates a new newsitem', function() {
+test('it creates a new newsitem', function(assert) {
   var controller = this.subject();
   controller.set('new_content', "a new post");
   store.newRecordType = undefined;
@@ -42,26 +42,26 @@ test('it creates a new newsitem', function() {
   Ember.run(function(){
     controller.send('create');
   });
-  equal(store.newRecordType, 'newsitem');
-  equal(store.newRecord.content, 'a new post');
+  assert.equal(store.newRecordType, 'newsitem');
+  assert.equal(store.newRecord.content, 'a new post');
 });
 
-test('it persists the new newsitem to the server', function() {
+test('it persists the new newsitem to the server', function(assert) {
   var controller = this.subject();
   controller.set('new_content', "a new post");
   store.didSave = false;
   Ember.run(function(){
     controller.send('create');
   });
-  equal(store.didSave, true);
+  assert.equal(store.didSave, true);
 });
 
 
-test('it clears the content field after posting', function() {
+test('it clears the content field after posting', function(assert) {
   var controller = this.subject();
   controller.set('new_content', "another new post");
   Ember.run(function(){
     controller.send('create');
   });
-  equal(controller.get('new_content'), '');
+  assert.equal(controller.get('new_content'), '');
 });

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { test } from 'ember-qunit';
+import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import moment from 'npm:moment';
 
@@ -62,33 +62,33 @@ module('Integration-News', {
   }
 });
 
-test('navigate to the news & needs page', function(){
-  expect(1);
+test('navigate to the news & needs page', function(assert){
+  assert.expect(1);
   visit('/');
   click('a.news');
   andThen(function(){
-    equal(currentRouteName(), 'news');
+    assert.equal(currentRouteName(), 'news');
   });
 });
 
-test('displays news item content', function(){
-  expect(1);
+test('displays news item content', function(assert){
+  assert.expect(1);
   visit('/news');
   andThen(function(){
     var items = find('.newsitem-text');
-    equal(items.first().text(), newsitems[0].content);
+    assert.equal(items.first().text(), newsitems[0].content);
   });
 });
 
-test('posts a new item', function(){
-  expect(2);
+test('posts a new item', function(assert){
+  assert.expect(2);
   visit('/news');
   fillIn('.new-post', new_newsitem.content);
   click('.add-post');
 
   andThen(function(){
     var items = find('.newsitem-text');
-    equal(items.length, newsitems.length + 1);
-    equal(items.first().text(), new_newsitem.content);
+    assert.equal(items.length, newsitems.length + 1);
+    assert.equal(items.first().text(), new_newsitem.content);
   });
 });
