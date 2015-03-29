@@ -12,8 +12,8 @@
   <div class="tab-content">
     {{#each info in section_info}}
     <div role="tabpanel" class="tab-pane" {{bind-attr id=info.dom_id}}>
-      {{#each info.fields}}
-        {{profile-field question=question response=response.text action="editedField"}}
+      {{#each field in info.fields}}
+        {{profile-field question=field.question response=field.response.text action="editedField"}}
       {{/each}}
     </div>
     {{/each}}

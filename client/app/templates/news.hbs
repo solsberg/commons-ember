@@ -8,14 +8,16 @@
   </form>
 
   <ul class="recent-news">
-    {{#each controller}}
+    {{#each item in controller}}
       <li class="news-item">
         <div class='newsitem-avatar pull-left'>
-          <img {{bind-attr src=profileImageUrl}}>
+          <img {{bind-attr src=item.profileImageUrl}}>
         </div>
         <div class='newsitem-content'>
-          <div class='newsitem-header'>{{link-to user.fullname 'user.profile' user}} posted an update {{timeSincePosted}}</div>
-          <div class='newsitem-text'>{{text}}</div>
+          <div class='newsitem-header'>
+            {{link-to item.user.fullname 'user.profile' item.user}} posted an update {{item.timeSincePosted}}
+          </div>
+          <div class='newsitem-text'>{{item.text}}</div>
         </div>
         <div class='newsitem-footer'></div>
       </li>
