@@ -8,5 +8,10 @@ export default Ember.Route.extend({
       var user = users.get('firstObject');
       return Profile.create({user: user, store: store}).get('sections');
     });
+  },
+
+  setupController: function(controller, model){
+    controller.set('model', model);
+    controller.set('changes', []);
   }
 });

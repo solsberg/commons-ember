@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  // itemController: 'user/profile-section',
-  // sortProperties: ['section.order'],
 
   changes: [],
 
@@ -35,9 +33,8 @@ export default Ember.Controller.extend({
     },
 
     saveChanges: function(){
-      // this.forEach(function(item){
-      //   item.saveChanges();
-      // });
+      var store = this.store;
+      var user = this.get('model.user');
       this.get('changes').forEach(function(change){
         var response = change.response;
         var text = change.value.trim();
@@ -71,15 +68,16 @@ export default Ember.Controller.extend({
         }
 
         if (response === undefined){
-          response = this.store.createRecord('profile-response', {
+          response = store.createRecord('profile-response', {
             questionId: change.question.get('id'),
-            user: this.get('model')[0].fields[0].user
+            user: user
           });
         }
         response.set('text', text);
         response.save();
 
       });
+      this.set('changes', []);
     }
   },
 

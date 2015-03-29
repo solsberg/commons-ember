@@ -8,7 +8,8 @@ export default Ember.Component.extend({
     if (response !== undefined) {
       this.set('current_text', response);
       if (this.get('is_date')) {
-        this.set('current_date', new Date(this.get('current_text')));
+        this.set('prev_date', response);
+        this.set('current_date', response);
       }
     }
     this.saveCurrentValue();
@@ -37,66 +38,21 @@ export default Ember.Component.extend({
   current_text: '',
   prev_text: '',
   current_date: null,
-
-  // isDirty: function() {
-  //   var response = this.get('response');
-  //   if (this.get('is_date')) {
-  //     var date = this.get('current_date');
-  //     return (response === undefined && date ||
-  //       response !== undefined && date.toUTCString() !== response.get('text'));
-  //   }
-  //   var text = this.get('current_text').trim();
-  //   return (response === undefined && text !== '' ||
-  //     response !== undefined && text !== response.get('text'));
-  // }.property('current_text', 'current_date'),
-
-  // saveChanges: function(){
-  //   if (this.get('isDirty')){
-  //     var response = this.get('response');
-  //     var text = this.get('current_text').trim();
-  //     if (this.get('is_date')) {
-  //       var date = this.get('current_date');
-  //       if (!date){
-  //         if (response !== undefined){
-  //           //should always be true
-  //           response.destroyRecord();
-  //         }
-  //         return;
-  //       }
-
-  //       if (response === undefined){
-  //         response = this.store.createRecord('profile-response', {
-  //           questionId: this.get('question.id'),
-  //           user: this.get('user')
-  //         });
-  //       }
-  //       response.set('text', date.toUTCString());
-  //       response.save();
-  //       return;
-  //     }
-
-  //     if (text === ''){
-  //       if (response !== undefined){
-  //         //should always be true
-  //         response.destroyRecord();
-  //       }
-  //       return;
-  //     }
-
-  //     if (response === undefined){
-  //       response = this.store.createRecord('profile-response', {
-  //         questionId: this.get('question.id'),
-  //         user: this.get('user')
-  //       });
-  //     }
-  //     response.set('text', text);
-  //     response.save();
-  //   }
-  // }
+  prev_date: null,
 
   saveCurrentValue: function(){
     this.set('prev_text', this.get('current_text'));
+    this.set('prev_date', this.get('current_date'));
   },
+
+  dateChanged: function(){
+    if (this.get('prev_date') !== this.get('current_date')){
+      var date = this.get('current_date');
+      console.log('date edited');
+      this.sendAction('action', this.get('question'), !date ? '' : date);//.toUTCString());
+      this.saveCurrentValue();
+    }
+  }.observes('current_date'),
 
   actions: {
     onTextEdit: function(){
