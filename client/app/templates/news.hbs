@@ -15,7 +15,7 @@
         </div>
         <div class='newsitem-content'>
           <div class='newsitem-header'>
-            {{link-to item.user.fullname 'user.profile' item.user}} posted an update {{item.timeSincePosted}}
+            {{link-to item.model.user.fullname 'user.profile' item.model.user}} posted an update {{item.timeSincePosted}}
           </div>
           <div class='newsitem-text'>{{item.text}}</div>
         </div>
