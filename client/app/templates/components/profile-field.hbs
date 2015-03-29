@@ -1,6 +1,6 @@
-<label {{bind-attr for=dom_id}}>{{question.text}}</label>
+<label for={{dom_id}}>{{question.text}}</label>
 {{#if has_help}}
-<span {{bind-attr id=help_id}} class="help-block">{{question.description}}</span>
+<span id={{help_id}} class="help-block">{{question.description}}</span>
 {{/if}}
 
 {{#if is_text_area}}

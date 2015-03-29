@@ -4,14 +4,14 @@
 <div role="tabpanel">
   <ul class="nav nav-tabs" role="tablist" id="myTab">
     {{#each info in section_info}}
-      <li role="presentation"><a {{bind-attr href=info.dom_href}} {{bind-attr aria-controls=info.dom_id}} role="tab" data-toggle="tab">{{info.title}}</a></li>
+      <li role="presentation"><a href={{info.dom_href}} aria-controls={{info.dom_id}} role="tab" data-toggle="tab">{{info.title}}</a></li>
     {{/each}}
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
     {{#each info in section_info}}
-    <div role="tabpanel" class="tab-pane" {{bind-attr id=info.dom_id}}>
+    <div role="tabpanel" class="tab-pane" id={{info.dom_id}}>
       {{#each field in info.fields}}
         {{profile-field question=field.question response=field.response.text action="editedField"}}
       {{/each}}
