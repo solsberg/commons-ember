@@ -3,16 +3,16 @@
 <form>
 <div role="tabpanel">
   <ul class="nav nav-tabs" role="tablist" id="myTab">
-    {{#each info in section_info}}
-      <li role="presentation"><a href={{info.dom_href}} aria-controls={{info.dom_id}} role="tab" data-toggle="tab">{{info.title}}</a></li>
+    {{#each section in model.sections itemController="user/profile-section"}}
+      <li role="presentation"><a href={{section.dom_href}} aria-controls={{section.dom_id}} role="tab" data-toggle="tab">{{section.model.section.title}}</a></li>
     {{/each}}
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    {{#each info in section_info}}
-    <div role="tabpanel" class="tab-pane" id={{info.dom_id}}>
-      {{#each field in info.fields}}
+    {{#each section in model.sections itemController="user/profile-section"}}
+    <div role="tabpanel" class="tab-pane" id={{section.dom_id}}>
+      {{#each field in section.model.fields}}
         {{profile-field question=field.question response=field.response.text action="editedField"}}
       {{/each}}
     </div>

@@ -4,17 +4,6 @@ export default Ember.Controller.extend({
 
   changes: [],
 
-  section_info: function(){
-    return this.get('model.sections').map(function(data){
-      return {
-        title: data.section.get('title'),
-        dom_id: 'section-' + data.section.get('id'),
-        dom_href: '#section-' + data.section.get('id'),
-        fields: data.fields
-      };
-    });
-  }.property('model'),
-
   actions: {
     editedField: function(question, new_value){
       var change = this.get('changes').find(function(item){
@@ -38,26 +27,6 @@ export default Ember.Controller.extend({
       this.get('changes').forEach(function(change){
         var response = change.response;
         var text = change.value.trim();
-        // if (this.get('is_date')) {
-        //   var date = this.get('current_date');
-        //   if (!date){
-        //     if (response !== undefined){
-        //       //should always be true
-        //       response.destroyRecord();
-        //     }
-        //     return;
-        //   }
-
-        //   if (response === undefined){
-        //     response = this.store.createRecord('profile-response', {
-        //       questionId: this.get('question.id'),
-        //       user: this.get('user')
-        //     });
-        //   }
-        //   response.set('text', date.toUTCString());
-        //   response.save();
-        //   return;
-        // }
 
         if (text === ''){
           if (response !== undefined){

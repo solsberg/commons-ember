@@ -6,11 +6,7 @@ export default Ember.Component.extend({
   didInsertElement: function(){
     var response = this.get('response');
     if (response !== undefined) {
-      this.set('current_text', response);
-      if (this.get('is_date')) {
-        this.set('prev_date', response);
-        this.set('current_date', response);
-      }
+      this.set('current_value', response);
     }
     this.saveCurrentValue();
   },
@@ -27,38 +23,25 @@ export default Ember.Component.extend({
     return this.get('question.description') !== undefined && this.get('question.description') !== '';
   }.property('question.description'),
 
-  is_text_area: function() {
-    return this.get('question.type') === 'textarea';
-  }.property('type'),
+  current_value: '',
+  prev_value: '',
 
-  is_date: function() {
-    return this.get('question.type') === 'date';
-  }.property('type'),
-
-  current_text: '',
-  prev_text: '',
-  current_date: null,
-  prev_date: null,
+  entry_type: function(){
+    var type = this.get('question.type');
+    if (type === "tel"){
+      type = "text";
+    }
+    return `profile-${type}-entry`;
+  }.property(),
 
   saveCurrentValue: function(){
-    this.set('prev_text', this.get('current_text'));
-    this.set('prev_date', this.get('current_date'));
+    this.set('prev_value', this.get('current_value'));
   },
 
-  dateChanged: function(){
-    if (this.get('prev_date') !== this.get('current_date')){
-      var date = this.get('current_date');
-      console.log('date edited');
-      this.sendAction('action', this.get('question'), !date ? '' : date);//.toUTCString());
-      this.saveCurrentValue();
-    }
-  }.observes('current_date'),
-
   actions: {
-    onTextEdit: function(){
-      if (this.get('prev_text') !== this.get('current_text')){
-        console.log('text edited');
-        this.sendAction('action', this.get('question'), this.get('current_text'));
+    onEdited: function(new_value){
+      if (this.get('prev_value') !== new_value){
+        this.sendAction('action', this.get('question'), new_value);
         this.saveCurrentValue();
       }
     }
