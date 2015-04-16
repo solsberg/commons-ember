@@ -1,25 +1,14 @@
 <div id="profile-form" class="col-md-10 col-md-offset-1">
 <h2>Profile</h2>
 <form>
-<div role="tabpanel">
-  <ul class="nav nav-tabs" role="tablist" id="myTab">
-    {{#each section in model.sections itemController="user/profile-section"}}
-      <li role="presentation"><a href={{section.dom_href}} aria-controls={{section.dom_id}} role="tab" data-toggle="tab">{{section.model.section.title}}</a></li>
-    {{/each}}
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content">
-    {{#each section in model.sections itemController="user/profile-section"}}
-    <div role="tabpanel" class="tab-pane" id={{section.dom_id}}>
-      {{#each field in section.model.fields}}
-        {{profile-field question=field.question response=field.response.text action="editedField"}}
-      {{/each}}
-    </div>
-    {{/each}}
-  </div>
-
+{{#tab-view titles=section_titles data=section_data prefix="section" as |fields|}}
+  {{#each field in fields}}
+    {{profile-field question=field.question response=field.response.text register="register_field" action="editedField"}}
+  {{/each}}
+{{/tab-view}}
+<div class="form-actions">
+  <button class='save-changes btn btn-primary pull-right' type="submit" {{action 'saveChanges'}}>Save Changes</button>
+  <button class='cancel-changes btn pull-right' type="button" {{action 'cancel'}}>Cancel</button>
 </div>
-<button class='save-changes btn btn-primary pull-right' type="submit" {{action 'saveChanges'}}>Save Changes</button>
 </form>
 </div>

@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs" role="tablist" id="myTab">
+  {{#each tab_infos as |tab_info|}}
+    <li role="presentation"><a href={{tab_info.dom_href}} aria-controls={{tab_info.dom_id}} role="tab" data-toggle="tab">{{tab_info.title}}</a></li>
+  {{/each}}
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  {{#each tab_infos as |tab_info|}}
+  <div role="tabpanel" class="tab-pane" id={{tab_info.dom_id}}>
+    {{yield tab_info.data}}
+  </div>
+  {{/each}}
+</div>

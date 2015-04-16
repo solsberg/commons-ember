@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['form-group'],
+  classNames: ['form-group', 'profile-field'],
+  classNameBindings: ['edited'],
   
   didInsertElement: function(){
+    this.sendAction('register', this);
     var response = this.get('response');
     if (response !== undefined) {
       this.set('current_value', response);
@@ -38,9 +40,21 @@ export default Ember.Component.extend({
     this.set('prev_value', this.get('current_value'));
   },
 
+  reset: function(){
+    var response = this.get('response');
+    if (response !== undefined) {
+      this.set('current_value', response);
+    } else {
+      this.set('current_value', '');
+    }
+    this.saveCurrentValue();
+    this.set('edited', false);
+  },
+
   actions: {
     onEdited: function(new_value){
       if (this.get('prev_value') !== new_value){
+        this.set('edited', true);
         this.sendAction('action', this.get('question'), new_value);
         this.saveCurrentValue();
       }

@@ -85,10 +85,18 @@ ul.profile-questions .help-block {
   font-size: smaller;
 }
 
-#profile-form button.save-changes {
+#profile-form .form-actions {
   margin-bottom: 20px;
+}
+
+#profile-form .form-actions .save-changes {
+  margin-left: 10px;
 }
 
 .tab-pane {
   padding-top: 20px;
+}
+
+.profile-field.edited input {
+  background-color: #fffddd;
 }

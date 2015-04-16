@@ -13,5 +13,6 @@ export default Ember.Route.extend({
   setupController: function(controller, model){
     controller.set('model', model);
     controller.set('changes', []);
+    controller.set('field_components', []);
   }
 });
