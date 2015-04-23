@@ -25,6 +25,12 @@ export default Ember.Component.extend({
     return this.get('question.description') !== undefined && this.get('question.description') !== '';
   }.property('question.description'),
 
+  edited: function(){
+    var response = this.get('response') || '';
+    var current_value = this.get('current_value') || '';
+    return response !== current_value || this.get('modified');
+  }.property('response', 'current_value', 'modified'),
+
   current_value: '',
   prev_value: '',
 
@@ -40,21 +46,18 @@ export default Ember.Component.extend({
     this.set('prev_value', this.get('current_value'));
   },
 
-  reset: function(){
-    var response = this.get('response');
-    if (response !== undefined) {
-      this.set('current_value', response);
-    } else {
-      this.set('current_value', '');
-    }
-    this.saveCurrentValue();
-    this.set('edited', false);
+  reset: function(value){
+    // var response = this.get('response');
+    var orig_value = value !== undefined ? value : '';
+    this.set('prev_value', orig_value);
+    this.set('current_value', orig_value);
+    this.set('modified', false);
   },
 
   actions: {
     onEdited: function(new_value){
       if (this.get('prev_value') !== new_value){
-        this.set('edited', true);
+        this.set('modified', true);
         this.sendAction('action', this.get('question'), new_value);
         this.saveCurrentValue();
       }

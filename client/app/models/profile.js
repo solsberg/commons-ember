@@ -17,16 +17,10 @@ export default Ember.Object.extend({
               section: section,
               fields: section.get('questions').map(function(question){
                 var response = results.responses.findBy('questionId', parseInt(question.get('id'), 10));
-                if (!response){
-                  response = store.createRecord('profile-response', {
-                    questionId: question.get('id'),
-                    user: user
-                  });
-                }
-                return {
+                return Ember.Object.create({
                   question: question,
                   response: response
-                };
+                });
               })
             };
           })

@@ -25,7 +25,7 @@ class ProfileResponsesController < ApplicationController
   def destroy
     response = ProfileResponse.find(params[:id])
     response.destroy
-    render json: {success: true}
+    render json: {}
   end
 
   private

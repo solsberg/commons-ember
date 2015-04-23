@@ -97,6 +97,6 @@ ul.profile-questions .help-block {
   padding-top: 20px;
 }
 
-.profile-field.edited input {
+.profile-field.edited input, .profile-field.edited textarea {
   background-color: #fffddd;
 }

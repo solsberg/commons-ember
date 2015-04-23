@@ -27,9 +27,11 @@ export default Ember.Controller.extend({
         return item.question.get('id') === question.get('id');
       });
       if (change === undefined){
+        var field = this.findFieldInfoForQuestion(question);
         change = {
           question: question,
-          response: this.findResponseForQuestion(question)
+          response: field.response,
+          field: field
         };
         this.get('changes').push(change);
       }
@@ -41,6 +43,7 @@ export default Ember.Controller.extend({
     saveChanges: function(){
       var store = this.store;
       var user = this.get('model.user');
+      var field;
       this.get('changes').forEach(function(change){
         var response = change.response;
         var text = change.value !== undefined ? change.value.trim() : '';
@@ -49,6 +52,8 @@ export default Ember.Controller.extend({
           if (response !== undefined){
             //should always be true
             response.destroyRecord();
+            field = change.field;
+            field.set('response', undefined);
           }
           return;
         }
@@ -58,43 +63,51 @@ export default Ember.Controller.extend({
             questionId: change.question.get('id'),
             user: user
           });
+          field = change.field;
+          field.set('response', response);
         }
         response.set('text', text);
         response.save();
       });
       this.set('changes', []);
-      this.get('field_components').forEach((field) => {
-        field.reset();
-      });
+      this.reset_fields();
     },
 
     cancel: function(){
       this.get('changes').forEach(function(change){
         var response = change.response;
+        if (response === undefined){
+          return;
+        }
         if (response.get('id') !== undefined){
           response.rollback();
         }
         else{
           response.set('text', '');
         }
-        // change.question.set('edited', false);
       });
       this.set('changes', []);
-      this.get('field_components').forEach((field) => {
-        field.reset();
-      });
+      this.reset_fields();
     }
   },
 
-  findResponseForQuestion: function(question){
-    var response;
+  reset_fields: function(){
+    this.get('field_components').forEach((field) => {
+      var question = field.get('question');
+      var field_info = this.findFieldInfoForQuestion(question);
+      field.reset(field_info.get('response.text'));
+    });
+  },
+
+  findFieldInfoForQuestion: function(question){
+    var this_field;
     this.get('model.sections').forEach(function(section){
       section.fields.forEach(function(field){
         if (field.question.get('id') === question.get('id')){
-          response = field.response;
+          this_field = field;
         }
       });
     });
-    return response;
+    return this_field;
   }
 });
