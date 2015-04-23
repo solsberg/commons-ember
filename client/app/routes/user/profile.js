@@ -14,5 +14,16 @@ export default Ember.Route.extend({
     controller.set('model', model);
     controller.set('changes', []);
     controller.set('field_components', []);
+    controller.set('showingTransitionModal', false);
+    controller.set('previousTransition', undefined);
+  },
+
+  actions: {
+    willTransition: function(transition){
+      if (this.controller.get('changes').length > 0){
+        transition.abort();
+        this.controller.showTransitionModal(transition);
+      }
+    }
   }
 });

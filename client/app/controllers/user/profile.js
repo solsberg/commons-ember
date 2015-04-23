@@ -17,6 +17,14 @@ export default Ember.Controller.extend({
     });
   }.property(),
 
+  showingTransitionModal: false,
+  previousTransition: undefined,
+
+  showTransitionModal: function(transition){
+   this.set('showingTransitionModal', true);
+   this.set('previousTransition', transition);
+  },
+
   actions: {
     register_field: function(field){
       this.get('field_components').push(field);
@@ -71,6 +79,9 @@ export default Ember.Controller.extend({
       });
       this.set('changes', []);
       this.reset_fields();
+      if (this.get('showingTransitionModal') && this.get('previousTransition') !== undefined){
+        this.get('previousTransition').retry();
+      }
     },
 
     cancel: function(){
@@ -88,6 +99,9 @@ export default Ember.Controller.extend({
       });
       this.set('changes', []);
       this.reset_fields();
+      if (this.get('showingTransitionModal') && this.get('previousTransition') !== undefined){
+        this.get('previousTransition').retry();
+      }
     }
   },
 

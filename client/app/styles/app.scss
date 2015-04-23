@@ -89,7 +89,7 @@ ul.profile-questions .help-block {
   margin-bottom: 20px;
 }
 
-#profile-form .form-actions .save-changes {
+#profile-form .save-changes, #profile-changes-dialog .save-changes {
   margin-left: 10px;
 }
 
@@ -100,3 +100,6 @@ ul.profile-questions .help-block {
 .profile-field.edited input, .profile-field.edited textarea {
   background-color: #fffddd;
 }
+
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
