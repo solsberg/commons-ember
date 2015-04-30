@@ -89,9 +89,9 @@ var CustomAuthorizer = AuthorizersBase.extend({
 });
 
 var auth = Ember.Object.extend({
-  authorized: function(){
+  authorized: Ember.computed(function(){
     return this.get('session.isAuthenticated');
-  }.property(),
+  }),
   current_user: null,
 
   login: function(email, password){

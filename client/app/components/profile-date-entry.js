@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     return new Date(text);
   }),
 
-  dateChanged: function(){
+  dateChanged: Ember.observer('value', function(){
     this.sendAction("action", this.get('value'));
-  }.observes('value')
+  })
 });

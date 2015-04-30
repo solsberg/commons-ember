@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   attributeBindings: ['role'],
   role: 'tabpanel',
 
-  tab_infos: function(){
+  tab_infos: Ember.computed(function(){
     var data = this.get('data'),
         prefix = this.get('prefix');
     return this.get('titles').map(function(title, idx){
@@ -15,5 +15,5 @@ export default Ember.Component.extend({
         dom_href: `#${prefix}-${idx + 1}`
       };
     });
-  }.property()
+  })
 });

@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  dom_id: function(){
+  dom_id: Ember.computed(function(){
     return 'section-' + this.get('model.section.id');
-  }.property(),
-  dom_href: function(){
+  }),
+  dom_href: Ember.computed(function(){
     return '#section-' + this.get('model.section.id');
-  }.property()
+  })
 });

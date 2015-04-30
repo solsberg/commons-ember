@@ -5,17 +5,17 @@ export default Ember.Controller.extend({
   changes: [],
   field_components: [],
 
-  section_titles: function(){
+  section_titles: Ember.computed(function(){
     return this.get('model.sections').map(function(data){
       return data.section.get('title');
     });
-  }.property(),
+  }),
 
-  section_data: function(){
+  section_data: Ember.computed(function(){
     return this.get('model.sections').map(function(data){
       return data.fields;
     });
-  }.property(),
+  }),
 
   showingTransitionModal: false,
   previousTransition: undefined,

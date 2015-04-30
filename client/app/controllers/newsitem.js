@@ -3,15 +3,15 @@ import {makeUrl} from '../services/gravatar';
 import moment from 'npm:moment';
 
 export default Ember.Controller.extend({
-  text: function(){
+  text: Ember.computed('content', function(){
     return this.get('model.content');
-  }.property('content'),
+  }),
 
-  timeSincePosted: function(){
+  timeSincePosted: Ember.computed('timestamp', function(){
     return moment(this.get('model.timestamp')).fromNow();
-  }.property('timestamp'),
+  }),
 
-  profileImageUrl: function(){
+  profileImageUrl: Ember.computed('user.email', function(){
     return makeUrl(this.get('model.user.email'));
-  }.property('user.email')
+  })
 });

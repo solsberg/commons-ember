@@ -13,34 +13,34 @@ export default Ember.Component.extend({
     this.saveCurrentValue();
   },
 
-  dom_id: function(){
+  dom_id: Ember.computed(function(){
     return 'question-' + this.get('question.id');
-  }.property(),
+  }),
 
-  help_id: function(){
+  help_id: Ember.computed(function(){
     return 'question-help_' + this.get('question.id');
-  }.property(),
+  }),
 
-  has_help: function(){
+  has_help: Ember.computed('question.description', function(){
     return this.get('question.description') !== undefined && this.get('question.description') !== '';
-  }.property('question.description'),
+  }),
 
-  edited: function(){
+  edited: Ember.computed('response', 'current_value', 'modified', function(){
     var response = this.get('response') || '';
     var current_value = this.get('current_value') || '';
     return response !== current_value || this.get('modified');
-  }.property('response', 'current_value', 'modified'),
+  }),
 
   current_value: '',
   prev_value: '',
 
-  entry_type: function(){
+  entry_type: Ember.computed(function(){
     var type = this.get('question.type');
     if (type === "tel"){
       type = "text";
     }
     return `profile-${type}-entry`;
-  }.property(),
+  }),
 
   saveCurrentValue: function(){
     this.set('prev_value', this.get('current_value'));
