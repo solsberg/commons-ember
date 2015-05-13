@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  date_value: Ember.computed('value', function(key, value, previousValue){
+  date_value: Ember.computed('value', function(key, value/*, previousValue*/){
     if (arguments.length > 1) {
       if (value instanceof Date){
         this.set('value', value.toUTCString());

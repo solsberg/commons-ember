@@ -150,6 +150,45 @@ ProfileQuestion.reopenClass({
       order: 21,
       type: "text",
       section: 2
+    },
+    {
+      id: 20,
+      text: "Would you like to mentor others who share your passion?",
+      description: "Please describe your passions for which you would like to provide mentoring. They can be professional, creative, spiritual or any way you think of it",
+      order: 1,
+      type: "textarea",
+      section: 3
+    },
+    {
+      id: 21,
+      text: "Would you like to be mentored?",
+      description: "In what specifically? (List separately) What are you looking for from your mentor?",
+      order: 2,
+      type: "textarea",
+      section: 3
+    },
+    {
+      id: 22,
+      text: "Extracurricular interests",
+      description: "Please tell us about any other interests and activities which you are involved with",
+      order: 1,
+      type: "textarea",
+      section: 4
+    },
+    {
+      id: 23,
+      text: "Spiritual Pursuits",
+      description: "Please tell us about your spiritual journey",
+      order: 2,
+      type: "textarea",
+      section: 4
+    },
+    {
+      id: 24,
+      text: "Other things we should know about you",
+      order: 3,
+      type: "textarea",
+      section: 4
     }
   ]
 });

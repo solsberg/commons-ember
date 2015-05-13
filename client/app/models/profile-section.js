@@ -19,6 +19,18 @@ ProfileSection.reopenClass({
       title: "Professional Networking",
       order: 2,
       questions: [11]
+    },
+    {
+      id: 3,
+      title: "Mentoring",
+      order: 3,
+      questions: [20,21]
+    },
+    {
+      id: 4,
+      title: "Other Interests",
+      order: 4,
+      questions: [22,23,24]
     }
   ]
 });
