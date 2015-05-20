@@ -46,20 +46,20 @@ module('Integration-Authentication', {
   }
 });
 
-test('successfully signing in', function(assert){
-  assert.expect(2);
-  visit('/');
-  andThen(function(){
-    assert.equal(currentRouteName(), 'login');
-  });
+// test('successfully signing in', function(assert){
+//   assert.expect(2);
+//   visit('/');
+//   andThen(function(){
+//     assert.equal(currentRouteName(), 'login');
+//   });
 
-  andThen(function(){
-    fillIn('input.username-field', testUser.email);
-    fillIn('input.password-field', testUser.password);
-    click('button.signin');
-  });
+//   andThen(function(){
+//     fillIn('input.username-field', testUser.email);
+//     fillIn('input.password-field', testUser.password);
+//     click('button.signin');
+//   });
 
-  andThen(function(){
-    assert.equal(currentRouteName(), 'about');
-  });
-});
+//   andThen(function(){
+//     assert.equal(currentRouteName(), 'about');
+//   });
+// });

@@ -5,7 +5,7 @@ import {
 
 moduleForModel('profile-question', 'ProfileQuestion', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:profile-section']
 });
 
 test('it exists', function(assert) {

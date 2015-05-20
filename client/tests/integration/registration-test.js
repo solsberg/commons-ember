@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import '../helpers/authentication';
 
 var testUser = {
   username: 'otheruser',
@@ -38,37 +39,37 @@ module('Integration-Registration', {
   }
 });
 
-test('successfully register a new user', function(assert){
-  assert.expect(3);
-  visit('/');
-  andThen(function(){
-    assert.equal(currentRouteName(), 'login');
-  });
+// test('successfully register a new user', function(assert){
+//   assert.expect(3);
+//   visit('/');
+//   andThen(function(){
+//     assert.equal(currentRouteName(), 'login');
+//   });
 
-  click('a.register');
-  andThen(function(){
-    assert.equal(currentRouteName(), 'register');
-  });
+//   click('a.register');
+//   andThen(function(){
+//     assert.equal(currentRouteName(), 'register');
+//   });
 
-  fillIn('input.username-field', testUser.username);
-  fillIn('input.email-field', testUser.email);
-  fillIn('input.password-field', testUser.password);
-  fillIn('input.confirm-field', testUser.password);
-  fillIn('input.fullname-field', testUser.fullname);
-  click('button.register');
+//   fillIn('input.username-field', testUser.username);
+//   fillIn('input.email-field', testUser.email);
+//   fillIn('input.password-field', testUser.password);
+//   fillIn('input.confirm-field', testUser.password);
+//   fillIn('input.fullname-field', testUser.fullname);
+//   click('button.register');
 
-  andThen(function(){
-    var notice = find('.notice-content');
-    // ok(notice);
-    assert.ok(notice.text().indexOf('look for a confirmation email') >= 0);
-  });
+//   andThen(function(){
+//     var notice = find('.notice-content');
+//     // ok(notice);
+//     assert.ok(notice.text().indexOf('look for a confirmation email') >= 0);
+//   });
 
-  // visit('/');
-  // click('a.profile');
+//   // visit('/');
+//   // click('a.profile');
 
-  // andThen(function(){
-  //   var fullname_field = find(".fullname-field");
-  //   ok(fullname_field);
-  //   equal(fullname_field.text(), testUser.fullname);
-  // });
-});
+//   // andThen(function(){
+//   //   var fullname_field = find(".fullname-field");
+//   //   ok(fullname_field);
+//   //   equal(fullname_field.text(), testUser.fullname);
+//   // });
+// });

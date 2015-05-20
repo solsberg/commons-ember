@@ -57,8 +57,10 @@ module('Integration-News', {
 
   teardown: function(){
     fakeLogout();
-    Ember.run(this.App, this.App.destroy);
-    server.shutdown();
+    andThen(function(){
+      Ember.run(this.App, this.App.destroy);
+      server.shutdown();
+    }.bind(this));
   }
 });
 
