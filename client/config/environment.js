@@ -29,6 +29,10 @@ module.exports = function(environment) {
     ENV.apiHost = 'http://localhost:3000';
     ENV.authHost = ENV.apiHost;
 
+    ENV["ember-cli-mirage"] = {
+      enabled: false
+    };
+
     ENV["simple-auth"] = {
       crossOriginWhitelist: [ENV.apiHost],
       routeAfterAuthentication: 'index',

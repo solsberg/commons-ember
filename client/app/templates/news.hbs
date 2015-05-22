@@ -8,18 +8,9 @@
   </form>
 
   <ul class="recent-news">
-    {{#each item in controller}}
+    {{#each sorted_newsitems as |item|}}
       <li class="news-item">
-        <div class='newsitem-avatar pull-left'>
-          <img src={{item.profileImageUrl}}>
-        </div>
-        <div class='newsitem-content'>
-          <div class='newsitem-header'>
-            {{link-to item.model.user.fullname 'user.profile' item.model.user}} posted an update {{item.timeSincePosted}}
-          </div>
-          <div class='newsitem-text'>{{item.text}}</div>
-        </div>
-        <div class='newsitem-footer'></div>
+        {{news-item item=item}}
       </li>
     {{/each}}
   </ul>

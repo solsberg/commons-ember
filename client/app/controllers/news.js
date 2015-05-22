@@ -1,11 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
   new_content: '',
 
-  itemController: 'newsitem',
-  sortProperties: ['timestamp'],
-  sortAscending: false,
+  newsitemsChronRev: ['timestamp:desc'],
+  sorted_newsitems: Ember.computed.sort('model', 'newsitemsChronRev'),
 
   actions: {
     create: function(){
