@@ -11,10 +11,10 @@ export default function() {
   this.post('/newsitems', function(db, request) {
     var attrs = JSON.parse(request.requestBody);
     attrs.newsitem.timestamp = new Date();
-    var newsitem = db.newsitems.insert(attrs);
-    return newsitem;
+    var newsitem = db.newsitems.insert(attrs.newsitem);
+    return {newsitem: newsitem};
   });
-  
+
   // These comments are here to help you get started. Feel free to delete them.
 
   /*
