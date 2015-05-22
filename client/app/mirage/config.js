@@ -1,5 +1,3 @@
-import moment from 'npm:moment';
-
 export default function() {
 
   this.get('/users');
