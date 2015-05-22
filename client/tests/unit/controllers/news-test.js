@@ -6,24 +6,20 @@ var user = {
   uid: 'user'
 };
 
+var new_record = {
+  save: function(){
+    return Ember.RSVP.resolve();
+  }
+};
+
 var store = {
   find: function(){
     return Ember.RSVP.resolve([user]);
   },
 
   createRecord: function(record_type, values){
-    this.newRecordType = record_type;
-    this.newRecord = values;
-    this.newRecord.save = function(){
-      this.didSave = true;
-      return Ember.RSVP.resolve();
-    }.bind(this);
-    return this.newRecord;
-  },
-
-  newRecord: undefined,
-  newRecordType: undefined,
-  didSave: false
+    return new_record;
+  }
 };
 
 moduleFor('controller:news', 'NewsController', {
@@ -37,23 +33,25 @@ moduleFor('controller:news', 'NewsController', {
 test('it creates a new newsitem', function(assert) {
   var controller = this.subject();
   controller.set('new_content', "a new post");
-  store.newRecordType = undefined;
-  store.newRecord = undefined;
+
+  var spy = sinon.spy(store, "createRecord");
+
   Ember.run(function(){
     controller.send('create');
   });
-  assert.equal(store.newRecordType, 'newsitem');
-  assert.equal(store.newRecord.content, 'a new post');
+
+  assert.ok(spy.calledOnce);
+  assert.ok(spy.calledWith('newsitem'));
 });
 
 test('it persists the new newsitem to the server', function(assert) {
   var controller = this.subject();
   controller.set('new_content', "a new post");
-  store.didSave = false;
+  var spy = sinon.spy(new_record, "save");
   Ember.run(function(){
     controller.send('create');
   });
-  assert.equal(store.didSave, true);
+  assert.ok(spy.calledOnce);
 });
 
 
