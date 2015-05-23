@@ -31,10 +31,10 @@ test('sections are displayed by tabs', function(assert) {
   visit(`/members/${user.uid}/profile`);
 
   andThen(function() {
-    let tabs = find('.container .nav-tabs .profile-tab');
+    let tabs = find('.profile-tab');
     assert.equal(tabs.length, 4);
-    let first_title = find('.container .nav-tabs .profile-tab:eq(0) .title');
-    // assert.ok(first_title);
+
+    let first_title = tabs.eq(0).find('.title');
     assert.equal(first_title.text(), 'General Information');
   });
 });
@@ -46,19 +46,20 @@ test('questions are displayed inside the tabs', function(assert) {
 
   andThen(function() {
     //finds a question from the first section
-    var question_on_first_tab = find(".tab-content .profile-field label:contains(Home Address)");
-    assert.ok($(question_on_first_tab).is(':visible'));
+    var question_on_first_tab = find(".profile-field label:contains(Home Address)");
+    assert.ok(question_on_first_tab.is(':visible'));
 
     //doesn't find a question from the second section
-    var question_on_second_tab = find(".tab-content .profile-field label:contains(What do you do?)");
-    assert.ok(!$(question_on_second_tab).is(':visible'));
+    var question_on_second_tab = find(".profile-field label:contains(What do you do?)");
+    assert.ok(question_on_second_tab.is(':hidden'));
 
     //click on second tab
-    click('.container .nav-tabs .profile-tab:eq(1) .title');
-
-    //doesn't find a question from the first section
-    assert.ok($(question_on_first_tab).is(':visible'));
-    //finds find a question from the second section
-    assert.ok(!$(question_on_second_tab).is(':visible'));
+    click('.profile-tab:eq(1) .title');
+    andThen(function(){
+      //doesn't find a question from the first section
+      assert.ok(question_on_first_tab.is(':hidden'));
+      //finds find a question from the second section
+      assert.ok(question_on_second_tab.is(':visible'));
+    });
   });
 });
