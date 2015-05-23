@@ -1,6 +1,6 @@
-import { test, moduleFor } from 'ember-qunit';
 import Ember from 'ember';
-import DS from 'ember-data';
+import { test, moduleFor } from 'ember-qunit';
+import moment from 'npm:moment';
 
 moduleFor('controller:news', 'NewsController', {
   // Specify the other units that are required for this test.
@@ -25,6 +25,35 @@ moduleFor('controller:news', 'NewsController', {
 
     controller.set('store', this.store);
   }
+});
+
+test('it sorts the newsitems in reverse chronological order', function(assert){
+  var controller = this.subject();
+
+  var newsitems = [
+    Ember.Object.create({
+      id: 1,
+      content: "1",
+      timestamp: moment().subtract(2, 'h').toDate()
+    }),
+    Ember.Object.create({
+      id: 2,
+      content: "2",
+      timestamp: moment().subtract(1, 'h').toDate()
+    }),
+    Ember.Object.create({
+      id: 3,
+      content: "3",
+      timestamp: moment().toDate()
+    })
+  ];
+
+  controller.set('model', newsitems);
+
+  var sorted = controller.get('sorted_newsitems');
+  var sorted_ids = sorted.map((item) => item.id);
+
+  assert.deepEqual(sorted_ids, [3,2,1]);
 });
 
 test('it creates a new newsitem', function(assert) {
