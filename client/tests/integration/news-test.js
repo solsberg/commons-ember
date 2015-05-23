@@ -3,6 +3,8 @@ import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import moment from 'npm:moment';
 
+var application;
+
 var user = {
   id: 101,
   uid: 'user',
@@ -13,15 +15,15 @@ var user = {
 
 module('Integration-News', {
   setup: function(){
-    this.App = startApp();
+    application = startApp();
     fakeLogin(user);
   },
 
   teardown: function(){
     fakeLogout();
     andThen(function(){
-      Ember.run(this.App, this.App.destroy);
-    }.bind(this));
+      Ember.run(application, 'destroy');
+    });
   }
 });
 

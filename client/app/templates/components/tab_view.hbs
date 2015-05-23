@@ -1,6 +1,8 @@
 <ul class="nav nav-tabs" role="tablist" id="myTab">
   {{#each tab_infos as |tab_info|}}
-    <li role="presentation"><a href={{tab_info.dom_href}} aria-controls={{tab_info.dom_id}} role="tab" data-toggle="tab">{{tab_info.title}}</a></li>
+    <li class="profile-tab" role="presentation">
+      <a class="title" href={{tab_info.dom_href}} aria-controls={{tab_info.dom_id}} role="tab" data-toggle="tab">{{tab_info.title}}</a>
+    </li>
   {{/each}}
 </ul>
 

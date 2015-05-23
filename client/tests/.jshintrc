@@ -28,7 +28,8 @@
     "fakeLogin",
     "fakeLogout",
     "Pretender",
-    "md5"
+    "md5",
+    "sinon"
   ],
   "node": false,
   "browser": false,
