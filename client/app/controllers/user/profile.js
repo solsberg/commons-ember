@@ -7,13 +7,21 @@ export default Ember.Controller.extend({
 
   section_titles: Ember.computed(function(){
     return this.get('model.sections').map(function(data){
-      return data.section.get('title');
+      return data.get('title');
     });
   }),
 
   section_data: Ember.computed(function(){
-    return this.get('model.sections').map(function(data){
-      return data.fields;
+    var questions_by_section_id = this.get('model.fields').reduce((rslt, field) => {
+      var section_id = field.question.get('section.id');
+      if (rslt[section_id] === undefined){
+        rslt[section_id] = [];
+      }
+      rslt[section_id].push(field);
+      return rslt;
+    }, {});
+    return this.get('model.sections').map(function(section){
+      return questions_by_section_id[section.get('id')];
     });
   }),
 
