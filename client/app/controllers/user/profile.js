@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-  changes: [],
   field_components: [],
 
   section_titles: Ember.computed(function(){
@@ -13,7 +12,7 @@ export default Ember.Controller.extend({
 
   section_data: Ember.computed(function(){
     var questions_by_section_id = this.get('model.fields').reduce((rslt, field) => {
-      var section_id = field.question.get('section.id');
+      var section_id = field.get('question.section.id');
       if (rslt[section_id] === undefined){
         rslt[section_id] = [];
       }
@@ -33,59 +32,47 @@ export default Ember.Controller.extend({
    this.set('previousTransition', transition);
   },
 
+  responseNeedsSaving: function(response){
+    return !!response && response.get('isDirty') &&
+      !(response.get('isNew') && response.get('text').trim() === '');
+  },
+
   actions: {
     register_field: function(field){
       this.get('field_components').push(field);
     },
 
     editedField: function(question, new_value){
-      var change = this.get('changes').find(function(item){
-        return item.question.get('id') === question.get('id');
-      });
-      if (change === undefined){
-        var field = this.findFieldInfoForQuestion(question);
-        change = {
-          question: question,
-          response: field.response,
-          field: field
-        };
-        this.get('changes').push(change);
-      }
-      change.value = new_value;
-      console.log(`edited question ${question.get('id')}; new value: ${new_value}`);
+      var field = this.get('model.fields').find(f => f.question === question);
+      var response = field.get('response');
+      var text = !!new_value ? new_value.trim() : '';
 
+      if (response === undefined){
+        response = this.store.createRecord('profile-response', {
+          questionId: field.get('question.id')
+        });
+        field.set('response', response);
+      }
+      response.set('text', text);
+
+      console.log(`edited question ${question.get('id')}; new value: ${new_value}`);
     },
 
     saveChanges: function(){
-      var store = this.store;
-      var user = this.get('model.user');
-      var field;
-      this.get('changes').forEach(function(change){
-        var response = change.response;
-        var text = change.value !== undefined ? change.value.trim() : '';
+      this.get('model.fields').forEach((field) => {
+        var response = field.get('response');
 
-        if (text === ''){
-          if (response !== undefined){
-            //should always be true
-            response.destroyRecord();
-            field = change.field;
+        if (!!response && this.responseNeedsSaving(response)){
+          if (response.get('isNew')){
+            response.set('user', this.get('model.user'));
+          }
+          else if (response.get('text').trim() === ''){
+            this.store.deleteRecord(response);
             field.set('response', undefined);
           }
-          return;
+          response.save();
         }
-
-        if (response === undefined){
-          response = store.createRecord('profile-response', {
-            questionId: change.question.get('id'),
-            user: user
-          });
-          field = change.field;
-          field.set('response', response);
-        }
-        response.set('text', text);
-        response.save();
       });
-      this.set('changes', []);
       this.reset_fields();
       if (this.get('showingTransitionModal') && this.get('previousTransition') !== undefined){
         this.get('previousTransition').retry();
@@ -93,19 +80,19 @@ export default Ember.Controller.extend({
     },
 
     cancel: function(){
-      this.get('changes').forEach(function(change){
-        var response = change.response;
-        if (response === undefined){
-          return;
-        }
-        if (response.get('id') !== undefined){
-          response.rollback();
-        }
-        else{
-          response.set('text', '');
+      this.get('model.fields').forEach(function(field){
+        var response = field.get('response');
+
+        if (!!response){
+          if (response.get('isNew')){
+            response.set('text', '');
+          }
+          else if (response.get('isDirty')){
+            response.rollback();
+          }
         }
       });
-      this.set('changes', []);
+
       this.reset_fields();
       if (this.get('showingTransitionModal') && this.get('previousTransition') !== undefined){
         this.get('previousTransition').retry();
@@ -114,22 +101,23 @@ export default Ember.Controller.extend({
   },
 
   reset_fields: function(){
-    this.get('field_components').forEach((field) => {
-      var question = field.get('question');
-      var field_info = this.findFieldInfoForQuestion(question);
-      field.reset(field_info.get('response.text'));
+    this.get('field_components').forEach((component) => {
+      var question = component.get('question');
+      var field = this.get('model.fields').find(f => f.question === question);
+      var response = field.get('response');
+      if (!!response){
+        component.reset(response.get('text'));
+      }
     });
   },
 
-  findFieldInfoForQuestion: function(question){
-    var this_field;
-    this.get('model.sections').forEach(function(section){
-      section.fields.forEach(function(field){
-        if (field.question.get('id') === question.get('id')){
-          this_field = field;
-        }
-      });
-    });
-    return this_field;
+  hasPendingChanges: function(){
+    return !!this.get('model.fields').find(f => this.responseNeedsSaving(f.response));
+  },
+
+  reset: function(){
+    this.set('field_components', []);
+    this.set('showingTransitionModal', false);
+    this.set('previousTransition', undefined);
   }
 });

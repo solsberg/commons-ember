@@ -1,6 +1,14 @@
 export default function() {
 
-  this.get('/users');
+  // this.get('/users', ['user', 'profile_response']);
+  this.get('/users', function(db, request){
+    if (request.queryParams.uid !== undefined){
+      var users = db.users.filter((user) => user.uid === request.queryParams.uid);
+      var profile_responses = db.profile_responses.where({user_id: users[0].id.toString()});
+      return ({users: users, profile_responses: profile_responses});
+    }
+    return {users: db.users};
+  });
 
   this.get('/newsitems', function(db){
     return {newsitems: db.newsitems};
@@ -11,6 +19,19 @@ export default function() {
     attrs.newsitem.timestamp = new Date();
     var newsitem = db.newsitems.insert(attrs.newsitem);
     return {newsitem: newsitem};
+  });
+
+  this.get('/users/:user_id/profile_responses', function(db){
+    return {profile_responses: db.profile_responses.where({user_id: request.params.user_id})}
+  });
+
+  // this.post('/profile_responses');
+  this.post('/profile_responses', function(db, request) {
+    var attrs = JSON.parse(request.requestBody);
+    var profile_response = db.profile_responses.insert(attrs.profile_response);
+    var user = db.users.where({id: parseInt(profile_response.user_id, 10)});
+    user[0].profile_responses = [profile_response.id];
+    return {profile_response: profile_response};
   });
 
   // These comments are here to help you get started. Feel free to delete them.
