@@ -1,6 +1,6 @@
 export default {
   name: 'user-service',
-  initialize: function(container, app) {
+  initialize: function(registry, app) {
     app.inject('route', 'userService', 'service:user');
     app.inject('controller', 'userService', 'service:user');
     app.inject('service:user', 'store', 'store:main');

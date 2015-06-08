@@ -142,7 +142,7 @@ var auth = Ember.Object.extend({
 export default {
   name: 'auth',
 
-  initialize: function(container, app) {
+  initialize: function(registry, app) {
     window.App = app;
     app.register('authenticator:custom', CustomAuthenticator);
     app.register('authorizer:custom', CustomAuthorizer);
