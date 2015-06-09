@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   date_value: Ember.computed('value', {
-    get(key){
+    get(){
       var text = this.get('value');
       if (!text || text ===''){
         return null;
