@@ -33,6 +33,13 @@ test('editing a value', function(assert) {
   visit(`/members/${user.uid}/profile`);
   var field;
 
+  server.post('/profile_responses', function(db, request) {
+    var attrs = JSON.parse(request.requestBody);
+    var profile_response = db.profile_responses.insert(attrs.profile_response);
+    assert.equal(profile_response.text, 'a new response', 'response saved to server');
+    return {profile_response: profile_response};
+  });
+
   andThen(function() {
     field = find('.profile-field').eq(0);
     assert.ok(!field.hasClass('edited'));
@@ -47,32 +54,7 @@ test('editing a value', function(assert) {
 
   andThen(function() {
     assert.ok(!field.hasClass('edited'));
-    // visit('/about');
-
-    var responses = server.db.profile_responses.where({text: 'a new response'});
-    assert.equal(responses.length, 1);
   });
-
-  // andThen(function() {
-  //   store.unloadAll('user');
-  //   store.unloadAll('profile-response');
-  //   var route = application.__container__.lookup('route:user/profile');
-  //   route.refresh();
-  //   // route.render();
-  //   visit(`/members/${user.uid}/profile`);
-  // });
-
-  // andThen(function() {
-  //   var view = application.__container__.lookup('view:user/profile');
-  //   Ember.run(function(){  // begin loop
-  //     view.rerender();
-  //   });
-  // });
-
-  // andThen(function(){
-  //   field = find('.profile-field').eq(0);
-  //   assert.equal(field.find('input').val(), 'a new response');
-  // });
 });
 
 test('displaying alert for unsaved changes', function(assert) {
@@ -132,24 +114,4 @@ test('displaying alert for unsaved changes', function(assert) {
     field = find('.profile-field').eq(0);
     assert.equal(field.find('input').val(), 'a new response');
   });
-  // andThen(function() {
-  //   store.unloadAll('user');
-  //   store.unloadAll('profile-response');
-  //   var route = application.__container__.lookup('route:user/profile');
-  //   route.refresh();
-  //   // route.render();
-  //   visit(`/members/${user.uid}/profile`);
-  // });
-
-  // andThen(function() {
-  //   var view = application.__container__.lookup('view:user/profile');
-  //   Ember.run(function(){  // begin loop
-  //     view.rerender();
-  //   });
-  // });
-
-  // andThen(function(){
-  //   field = find('.profile-field').eq(0);
-  //   assert.equal(field.find('input').val(), 'a new response');
-  // });
 });
