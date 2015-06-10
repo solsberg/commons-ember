@@ -18,7 +18,12 @@ export default Ember.Component.extend({
     }
   }),
 
-  dateChanged: Ember.observer('value', function(){
-    this.sendAction("action", this.get('value'));
-  })
+  actions:{
+    dateChanged: function(value){
+      if (value instanceof Date){
+        value = value.toUTCString();
+      }
+      this.sendAction("action", value);
+    }
+  }
 });
