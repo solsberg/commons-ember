@@ -101,5 +101,34 @@ ul.profile-questions .help-block {
   background-color: #fffddd;
 }
 
+ul.members-list {
+  list-style: none;
+  padding-top: 20px;
+  padding-left: 0px;
+}
+
+li.members-list-item {
+  border-top: #ccc solid 1px;
+  padding-bottom: 12px;
+  padding-top: 8px;
+}
+
+.user-avatar {
+  padding-right: 10px;
+}
+
+.userpane-content {
+  /*padding-left: 10px;*/
+}
+
+.userpane-footer {
+  clear: both;
+}
+
+.userpane-header {
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
 @import "ember-modal-dialog/ember-modal-structure";
 @import "ember-modal-dialog/ember-modal-appearance";

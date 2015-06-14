@@ -17,6 +17,8 @@ Router.map(function() {
       this.route('profile');
     });
   });
+  this.route('users.index');
+  this.route('users', function() {});
 });
 
 export default Router;
