@@ -3,21 +3,7 @@
 {{#if isCurrentUser}}
   {{profile-form profile=model didComplete='formEditingDidComplete' showingTransitionModal=showingTransitionModal}}
 {{else}}
-  {{#each model.fields_by_section as |section|}}
-    <div class='ro_section'>
-      <h4>{{section.title}}</h4>
-      <table>
-        <tbody>
-        {{#each section.fields as |field|}}
-          <tr class="profile-field-ro" id="question-{{field.question.id}}">
-            <th>{{field.question.text}}</th>
-            <td class="response-text">{{field.response.text}}</td>
-          </tr>
-        {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/each}}
+  {{profile-display profile=model}}
 {{/if}}
 </div>
 
