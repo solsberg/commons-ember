@@ -1,33 +1,23 @@
 <div id="profile-form" class="col-md-10 col-md-offset-1">
 <h2>Profile</h2>
-<form>
-{{#tab-view titles=section_titles data=section_data prefix="section" as |fields|}}
-  {{#each field in fields}}
-    {{profile-field question=field.question response=field.response.text register="register_field" action="editedField"}}
+{{#if isCurrentUser}}
+  {{profile-form profile=model didComplete='formEditingDidComplete' showingTransitionModal=showingTransitionModal}}
+{{else}}
+  {{#each model.fields_by_section as |section|}}
+    <div class='ro_section'>
+      <h4>{{section.title}}</h4>
+      <table>
+        <tbody>
+        {{#each section.fields as |field|}}
+          <tr class="profile-field-ro" id="question-{{field.question.id}}">
+            <th>{{field.question.text}}</th>
+            <td class="response-text">{{field.response.text}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
   {{/each}}
-{{/tab-view}}
-<div class="form-actions">
-  <button class='save-changes btn btn-primary pull-right' type="submit" {{action 'saveChanges'}}>Save Changes</button>
-  <button class='cancel-changes btn pull-right' type="button" {{action 'cancel'}}>Cancel</button>
-  <div class="clearfix"></div>
-</div>
-</form>
+{{/if}}
 </div>
 
-{{#if showingTransitionModal}}
-{{#modal-dialog translucentOverlay=true}}
-<div class="panel panel-default" id="profile-changes-dialog">
-  <div class="panel-heading">
-    <h3 class="panel-title">Unsaved Changes</h3>
-  </div>
-  <div class="panel-body">
-    There are unsaved changes in some profile responses. How would you like to continue?
-  </div>
-  <div class="panel-footer">
-    <button class='btn btn-sm btn-primary pull-right save-changes' {{action 'saveChanges'}}>Save Changes</button>
-    <button class='btn btn-sm pull-right cancel-changes' {{action 'cancel'}}>Forget Changes</button>
-    <div class="clearfix"></div>
-  </div>
-</div>
-{{/modal-dialog}}
-{{/if}}

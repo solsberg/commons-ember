@@ -28,7 +28,7 @@ module('Acceptance | Profile Sections', {
 test('sections are displayed by tabs', function(assert) {
   assert.expect(2);
 
-  visit(`/members/${user.uid}/profile`);
+  visit(`/members/${user.username}/profile`);
 
   andThen(function() {
     let tabs = find('.profile-tab');
@@ -42,7 +42,7 @@ test('sections are displayed by tabs', function(assert) {
 test('questions are displayed inside the tabs', function(assert) {
   assert.expect(4);
 
-  visit(`/members/${user.uid}/profile`);
+  visit(`/members/${user.username}/profile`);
 
   andThen(function() {
     //finds a question from the first section

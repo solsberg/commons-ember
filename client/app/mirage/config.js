@@ -11,6 +11,7 @@ export default function() {
     return {newsitem: newsitem};
   });
 
+  this.get('profile_responses/:id');
   this.post('/profile_responses');
 
   // These comments are here to help you get started. Feel free to delete them.

@@ -15,7 +15,6 @@ var user = {
 module('Acceptance | profile/editing', {
   beforeEach: function() {
     application = startApp();
-    this.store = application.__container__.lookup('store:main');
     fakeLogin(user);
     server.create('user', user);
   },
@@ -28,9 +27,8 @@ module('Acceptance | profile/editing', {
 
 test('editing a value', function(assert) {
   assert.expect(4);
-  var store = this.store;
 
-  visit(`/members/${user.uid}/profile`);
+  visit(`/members/${user.username}/profile`);
   var field;
 
   server.post('/profile_responses', function(db, request) {
@@ -42,26 +40,25 @@ test('editing a value', function(assert) {
 
   andThen(function() {
     field = find('.profile-field').eq(0);
-    assert.ok(!field.hasClass('edited'));
+    assert.ok(!field.hasClass('edited'), 'field initially displays as not edited');
     fillIn(field.find('input'), 'a new response');
     triggerEvent(field.find('input'), "blur");
   });
 
   andThen(function() {
-    assert.ok(field.hasClass('edited'));
+    assert.ok(field.hasClass('edited'), 'field displays as edited after entering text');
     click('.save-changes');
   });
 
   andThen(function() {
-    assert.ok(!field.hasClass('edited'));
+    assert.ok(!field.hasClass('edited'), 'field displays as not edited after saving');
   });
 });
 
 test('displaying alert for unsaved changes', function(assert) {
   assert.expect(6);
-  var store = this.store;
 
-  visit(`/members/${user.uid}/profile`);
+  visit(`/members/${user.username}/profile`);
   var field;
 
   andThen(function() {
@@ -83,7 +80,7 @@ test('displaying alert for unsaved changes', function(assert) {
   });
 
   andThen(function(){
-    visit(`/members/${user.uid}/profile`);
+    visit(`/members/${user.username}/profile`);
   });
 
   andThen(function(){
@@ -107,7 +104,7 @@ test('displaying alert for unsaved changes', function(assert) {
   });
 
   andThen(function(){
-    visit(`/members/${user.uid}/profile`);
+    visit(`/members/${user.username}/profile`);
   });
 
   andThen(function(){

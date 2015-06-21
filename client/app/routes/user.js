@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function(){
-    //no model required
+  model: function(params){
+    return this.store.find('user', {username: params.user_id}).then(function(users){
+      return users.findBy('username', params.user_id);
+    });
   },
 
   serialize: function(model){

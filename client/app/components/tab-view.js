@@ -7,10 +7,10 @@ export default Ember.Component.extend({
   tab_infos: Ember.computed(function(){
     var data = this.get('data'),
         prefix = this.get('prefix');
-    return this.get('titles').map(function(title, idx){
+    return data.map((info, idx) => {
       return {
-        title: title,
-        data: data[idx],
+        title: info[this.get('title_key')],
+        data: info[this.get('tab_data_key')],
         dom_id: `${prefix}-${idx + 1}`,
         dom_href: `#${prefix}-${idx + 1}`
       };
