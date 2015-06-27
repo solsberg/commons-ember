@@ -10,7 +10,7 @@ moduleForModel('profile', 'Profile', {
   // needs: ['model:profile-section']
 
   setup: function(){
-    var user = Ember.Object.create({
+    this.user = Ember.Object.create({
       uid: 'user',
       profileResponses: [Ember.Object.create(
         {
@@ -45,11 +45,11 @@ moduleForModel('profile', 'Profile', {
 
     var store = {};
 
-    store.find = sinon.stub();
-    store.find.withArgs('profile-section').returns(Ember.RSVP.resolve(sections));
-    store.find.withArgs('profile-question').returns(Ember.RSVP.resolve(questions));
+    store.findAll = sinon.stub();
+    store.findAll.withArgs('profile-section').returns(Ember.RSVP.resolve(sections));
+    store.findAll.withArgs('profile-question').returns(Ember.RSVP.resolve(questions));
 
-    this.model = Profile.create({user, store});
+    this.model = Profile.create({user: this.user, store});
     Ember.run(() => {
       this.model.fetch();
     });
@@ -105,7 +105,7 @@ test('it saves a modified response', function(assert){
   assert.expect(1);
 
   let response = this.fields[0].response;
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
   response.save = sinon.stub();
 
   this.model.save();
@@ -117,7 +117,7 @@ test('it doesnt save an unmodified response', function(assert){
   assert.expect(1);
 
   let response = this.fields[0].response;
-  response.isDirty = false;
+  response.hasDirtyAttributes = false;
   response.save = sinon.stub();
 
   this.model.save();
@@ -130,7 +130,7 @@ test('it saves a new response', function(assert){
 
   let response = Ember.Object.create({text: 'some response'});
   this.fields[1].response = response;
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
   response.isNew = true;
   response.save = sinon.stub();
 
@@ -144,7 +144,7 @@ test('it doesnt save a new response when the answer has been deleted', function(
 
   let response = Ember.Object.create();
   this.fields[1].response = response;
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
   response.isNew = true;
   response.text = '';
   response.save = sinon.stub();
@@ -159,7 +159,7 @@ test('it assigns a new response to the user before saving', function(assert){
 
   let response = Ember.Object.create({text: 'some response'});
   this.fields[1].response = response;
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
   response.isNew = true;
   response.save = sinon.stub();
 
@@ -173,7 +173,7 @@ test('it deletes the response record when user has cleared the answer', function
 
   let response = this.fields[0].response;
   response.text = '';
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
   response.save = sinon.stub();
 
   let store = this.model.get('store');
@@ -190,12 +190,12 @@ test('it rolls backs the changes when user cancels', function(assert){
   assert.expect(1);
 
   let response = this.fields[0].response;
-  response.isDirty = true;
-  response.rollback = sinon.stub();
+  response.hasDirtyAttributes = true;
+  response.rollbackAttributes = sinon.stub();
 
   this.model.cancel();
 
-  assert.ok(response.rollback.calledOnce);
+  assert.ok(response.rollbackAttributes.calledOnce);
 });
 
 test('it clears the text of (and doesnt roll back) a new response', function(assert){
@@ -203,21 +203,21 @@ test('it clears the text of (and doesnt roll back) a new response', function(ass
 
   let response = Ember.Object.create({text: 'some response'});
   this.fields[1].response = response;
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
   response.isNew = true;
-  response.rollback = sinon.stub();
+  response.rollbackAttributes = sinon.stub();
 
   this.model.cancel();
 
   assert.equal(response.get('text'), '');
-  assert.equal(response.rollback.callCount, 0);
+  assert.equal(response.rollbackAttributes.callCount, 0);
 });
 
 test('it knows if there have been any edits', function(assert){
   assert.expect(1);
 
   let response = this.fields[0].response;
-  response.isDirty = true;
+  response.hasDirtyAttributes = true;
 
   assert.equal(this.model.hasPendingChanges(), true);
 });

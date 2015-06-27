@@ -16,9 +16,9 @@ export default Ember.Component.extend({
     return this.get('question.description') !== undefined && this.get('question.description') !== '';
   }),
 
-  edited: Ember.computed('response.isDirty', 'response.text', function(){
+  edited: Ember.computed('response.hasDirtyAttributes', 'response.text', function(){
     var response = this.get('response');
-    return response !== undefined && response.get('isDirty') && !(response.get('isNew') && response.get('text') === '');
+    return response !== undefined && response.get('hasDirtyAttributes') && !(response.get('isNew') && response.get('text') === '');
   }),
 
   entry_type: Ember.computed(function(){

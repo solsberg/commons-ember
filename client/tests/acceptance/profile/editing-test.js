@@ -42,7 +42,7 @@ test('editing a value', function(assert) {
     field = find('.profile-field').eq(0);
     assert.ok(!field.hasClass('edited'), 'field initially displays as not edited');
     fillIn(field.find('input'), 'a new response');
-    triggerEvent(field.find('input'), "blur");
+    triggerEvent(field.find('input'), "focusout");
   });
 
   andThen(function() {

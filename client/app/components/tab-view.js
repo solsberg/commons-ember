@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  didInsertElement: function(){
+    Ember.$('#myTab a:first').tab('show');
+  },
+
   attributeBindings: ['role'],
   role: 'tabpanel',
 

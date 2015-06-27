@@ -5,7 +5,7 @@ var ProfileQuestion = DS.Model.extend({
   description: DS.attr('string'),
   type: DS.attr('string'),
   order: DS.attr('number'),
-  section: DS.belongsTo('profile-section')
+  section: DS.belongsTo('profile-section', {async: true})
 });
 
 ProfileQuestion.reopenClass({

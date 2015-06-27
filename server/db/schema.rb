@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102014143) do
+ActiveRecord::Schema.define(version: 20150624010226) do
 
   create_table "newsitems", force: true do |t|
     t.string   "content"
@@ -22,10 +22,29 @@ ActiveRecord::Schema.define(version: 20150102014143) do
 
   add_index "newsitems", ["user_id"], name: "index_newsitems_on_user_id"
 
+  create_table "profile_questions", force: true do |t|
+    t.string   "text"
+    t.string   "description"
+    t.string   "type"
+    t.integer  "order"
+    t.integer  "section_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profile_questions", ["section_id"], name: "index_profile_questions_on_section_id"
+
   create_table "profile_responses", force: true do |t|
     t.string   "text"
     t.integer  "user_id"
     t.integer  "question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "profile_sections", force: true do |t|
+    t.string   "title"
+    t.integer  "order"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

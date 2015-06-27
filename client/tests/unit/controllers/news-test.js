@@ -20,8 +20,8 @@ moduleFor('controller:news', 'NewsController', {
     this.store.createRecord = sinon.stub();
     this.store.createRecord.returns(this.new_record);
 
-    this.store.find = sinon.stub();
-    this.store.find.returns(Ember.RSVP.resolve([user]));
+    this.store.query = sinon.stub();
+    this.store.query.returns(Ember.RSVP.resolve([user]));
 
     controller.set('store', this.store);
   }

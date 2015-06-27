@@ -32,7 +32,7 @@ test('sections are displayed by tabs', function(assert) {
 
   andThen(function() {
     let tabs = find('.profile-tab');
-    assert.equal(tabs.length, 4);
+    assert.equal(tabs.length, 2);
 
     let first_title = tabs.eq(0).find('.title');
     assert.equal(first_title.text(), 'General Information');

@@ -9,12 +9,16 @@ export default Ember.Object.extend({
 
     var self = this;
     return new Ember.RSVP.Promise(function(resolve){
-      Ember.RSVP.hash({
-        responses: user.get('profileResponses'),
-        sections: store.find('profile-section'),
-        questions: store.find('profile-question')
+      //make sure all sections are loaded before questions
+      store.findAll('profile-section').then(sections => {
+        self.set('sections', sections);
+        return Ember.RSVP.hash({
+          responses: user.get('profileResponses'),
+          // sections: store.findAll('profile-section'),
+          questions: store.findAll('profile-question')
+        });
       }).then(function(results){
-        self.set('sections', results.sections);
+        // self.set('sections', results.sections);
         self.set('fields', results.questions.map(function(question){
           var response = results.responses.findBy('questionId', parseInt(question.get('id'), 10));
           return Ember.Object.create({
@@ -45,7 +49,7 @@ export default Ember.Object.extend({
   }),
 
   responseNeedsSaving: function(response){
-    return !!response && response.get('isDirty') &&
+    return !!response && response.get('hasDirtyAttributes') &&
       !(response.get('isNew') && response.get('text').trim() === '');
   },
 
@@ -75,7 +79,7 @@ export default Ember.Object.extend({
 
       if (!!response && this.responseNeedsSaving(response)){
         if (response.get('isNew')){
-          response.set('user', this.get('profile.user'));
+          response.set('user', this.get('user'));
         }
         else if (response.get('text').trim() === ''){
           this.get('store').deleteRecord(response);
@@ -96,8 +100,8 @@ export default Ember.Object.extend({
         if (response.get('isNew')){
           response.set('text', '');
         }
-        else if (response.get('isDirty')){
-          response.rollback();
+        else if (response.get('hasDirtyAttributes')){
+          response.rollbackAttributes();
         }
       }
     });

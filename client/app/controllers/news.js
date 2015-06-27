@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
 
       var self = this;
 
-      this.store.find('user', {uid: this.get('session.user.uid')}).then(function(users){
+      this.store.query('user', {uid: this.get('session.user.uid')}).then(function(users){
         var user = users.get('firstObject');
         var new_item = self.store.createRecord('newsitem', {
           content: content,

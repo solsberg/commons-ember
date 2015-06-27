@@ -1,6 +1,8 @@
 export default function() {
 
-  this.get('/users');
+  this.get('/users', function(db){
+    return {users: db.users, profile_responses: db.profile_responses};
+  });
 
   this.get('/newsitems');
 
@@ -13,6 +15,70 @@ export default function() {
 
   this.get('profile_responses/:id');
   this.post('/profile_responses');
+
+  this.get('profile_sections', function(){
+    return {profile_sections: [
+        {
+          id: 1,
+          title: "General Information",
+          order: 1
+        },
+        {
+          id: 2,
+          title: "Professional Networking",
+          order: 2
+        }
+      ]};
+  });
+
+  this.get('profile_questions', function(){
+    return {profile_questions: [
+        {
+          id: 1,
+          text: "Where did you grow up?",
+          order: 6,
+          type: "text",
+          section_id: 1
+        },
+        {
+          id: 2,
+          text: "Where did you attend synagogue?",
+          order: 7,
+          type: "text",
+          section_id: 1
+        },
+        {
+          id: 3,
+          text: "Where did you attend high school?",
+          order: 8,
+          type: "text",
+          section_id: 1
+        },
+        {
+          id: 6,
+          text: "Home Address",
+          description: "Please enter your current address - you might find that you are neighbors with other JMR men!",
+          order: 4,
+          type: "textarea",
+          section_id: 1
+        },
+        {
+          id: 11,
+          text: "What do you do?",
+          order: 13,
+          type: "textarea",
+          section_id: 2
+        },
+        {
+          id: 12,
+          text: "What services or products do you provide that other men might be interested in?",
+          description: "How can they best get in touch with you?",
+          order: 14,
+          type: "textarea",
+          section_id: 2
+        }
+      ]};
+  });
 
   // These comments are here to help you get started. Feel free to delete them.
 

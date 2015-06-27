@@ -44,7 +44,7 @@ moduleForComponent('profile-form', 'Unit | Component | profile form', {
     ];
 
     let needsSaving = function(response){
-      return !!response && response.isDirty &&
+      return !!response && response.hasDirtyAttributes &&
         !(response.isNew && response.text.trim() === '');
     };
 
@@ -74,16 +74,3 @@ test('it renders', function(assert) {
   assert.equal(component._state, 'inDOM');
 });
 
-// test('it knows the section titles', function(assert){
-//   let component = this.subject();
-//   let section_titles = component.get('section_titles');
-//   assert.deepEqual(section_titles, ["Section 1", "Another Section"]);
-// });
-
-// test('it lists the questions by section', function(assert){
-//   assert.expect(2);
-//   let component = this.subject();
-//   let section_data = component.get('section_data');
-//   assert.equal(section_data[0][0].question.get('text'), "A question");
-//   assert.equal(section_data[1][0].question.get('text'), "Another question");
-// });

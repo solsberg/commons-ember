@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :profile_responses, only: [:index]
   end
   resources :profile_responses, only: [:create, :update, :destroy]
+  resources :profile_sections, only: [:index, :create, :update, :destroy]
+  resources :profile_questions, only: [:index, :create, :update, :destroy]
 
   resources :newsitems, only: [:index, :create]
 

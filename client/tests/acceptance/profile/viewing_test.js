@@ -39,11 +39,11 @@ test('viewing another members responses', function(assert) {
   other_user = server.create('user', other_user);
   var response = server.create('profile_response', {
     text: 'his response',
-    questionId: 1,
+    question_id: 1,
     user_id: other_user.id
   });
   // other_user.profileResponses = [response.id];
-  server.db.users.update(other_user.id, {profileResponses: [response.id]});
+  server.db.users.update(other_user.id, {profile_responses: [response.id]});
 
   visit(`/members/${other_user.username}/profile`);
 
