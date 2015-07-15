@@ -68,18 +68,21 @@ var CustomAuthorizer = AuthorizersBase.extend({
 
       var success = requestOptions.success;
       requestOptions.success = function(data, textStatus, jqXHR_resp){
-        var access_token = jqXHR_resp.getResponseHeader('Access-Token');
-        if (access_token !== undefined){
-          session.set('auth_info.access_token', access_token);
-        }
-        var client = jqXHR_resp.getResponseHeader('Client');
-        if (client !== undefined){
-          session.set('auth_info.client', client);
-        }
         var expiry = jqXHR_resp.getResponseHeader('Expiry');
-        if (expiry !== undefined){
+        //filter out old header values by old expiry
+        if (!!expiry && parseInt(expiry, 10) >= parseInt(session.get('auth_info.expiry'), 10)){
           session.set('auth_info.expiry', expiry);
+
+          var access_token = jqXHR_resp.getResponseHeader('Access-Token');
+          if (access_token !== undefined){
+            session.set('auth_info.access_token', access_token);
+          }
+          var client = jqXHR_resp.getResponseHeader('Client');
+          if (client !== undefined){
+            session.set('auth_info.client', client);
+          }
         }
+
         if (success !== undefined){
           success(data, textStatus, jqXHR_resp);
         }

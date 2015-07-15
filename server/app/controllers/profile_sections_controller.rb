@@ -1,5 +1,5 @@
 class ProfileSectionsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   def index
     sections = ProfileSection.all
