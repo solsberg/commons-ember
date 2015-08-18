@@ -31,7 +31,7 @@ export default Ember.Object.extend({
     });
   },
 
-  fields_by_section: Ember.computed('fields.@each', function(){
+  fields_by_section: Ember.computed('fields.[]', function(){
     var questions_by_section_id = this.get('fields').reduce((rslt, field) => {
       var section_id = field.get('question.section.id');
       if (rslt[section_id] === undefined){
