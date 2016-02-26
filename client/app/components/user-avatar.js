@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import {makeUrl} from '../services/gravatar';
+import {makeUrl} from '../utils/gravatar';
 
 export default Ember.Component.extend({
   profileImageUrl: Ember.computed('user.email', function(){

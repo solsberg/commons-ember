@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import {makeUrl} from '../services/gravatar';
+import {makeUrl} from '../utils/gravatar';
 import moment from 'npm:moment';
 
 export default Ember.Controller.extend({

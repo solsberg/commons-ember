@@ -1,4 +1,5 @@
 export default function() {
+  this.passthrough('http://localhost:3000/auth/', 'http://localhost:3000/auth/sign_in');
 
   this.get('/users', function(db){
     return {users: db.users, profile_responses: db.profile_responses};

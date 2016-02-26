@@ -13,12 +13,12 @@
     "loader.js": "ember-cli/loader.js#3.2.1",
     "qunit": "~1.18.0",
     "bootstrap": "~3.2.0",
-    "ember-simple-auth": "0.7.2",
     "bootstrap-datepicker": "~1.4.0",
     "ember-computed-content-controller": "0.2.0",
-    "pretender": "~0.6.0",
+    "pretender": "~0.10.1",
     "lodash": "~3.7.0",
     "sinonjs": "~1.14.1",
-    "blueimp-md5": "~1.1.0"
+    "blueimp-md5": "~1.1.0",
+    "Faker": "~3.0.0"
   }
 }

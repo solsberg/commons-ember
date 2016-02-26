@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  session: Ember.inject.service(),
 
   isCurrentUser: Ember.computed('model.user', function(){
-    return this.get('model.user.id') === this.get('session.user.id').toString();
+    return this.get('model.user.id') === this.get('session.data').authenticated.user.id.toString();
   }),
 
   showingTransitionModal: false,

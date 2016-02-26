@@ -1,12 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  userService: Ember.inject.service('user'),
   needs: ['notice'],
 
   actions: {
     register: function(){
       var self = this;
-      self.get('auth').createUser({
+      this.get('userService').createUser({
         email: self.get('email'),
         password: self.get('password'),
         password_confirmation: self.get('password_confirmation'),

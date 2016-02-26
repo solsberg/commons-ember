@@ -30,7 +30,9 @@ module('Integration-News', {
 test('navigate to the news & needs page', function(assert){
   assert.expect(1);
   visit('/');
-  click('a.news');
+  andThen(function(){
+    click('a.news');
+  });
   andThen(function(){
     assert.equal(currentRouteName(), 'news');
   });
