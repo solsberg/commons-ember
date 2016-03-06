@@ -49,32 +49,10 @@ li.news-item {
   margin-bottom: 4px;
 }
 
-.login-pane {
-  text-align: center;
+#login-pane {
+  width: 300px;
+  margin: 0 auto;
   padding-top: 5%;
-}
-
-.login-pane .logo {
-  padding: 22px;
-}
-
-.login-pane .message {
-  margin: 15px 40px;
-}
-
-.login-pane form {
-  background-color: white;
-  padding: 30px 30px 60px 30px;
-  text-align: left;
-}
-
-.login-pane .nav {
-  text-align: left;
-  margin: 15px 25px;
-}
-
-.login-pane .nav a {
-  color: #999;
 }
 
 ul.profile-questions {
