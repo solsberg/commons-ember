@@ -1,5 +1,5 @@
 class ProfileQuestionsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate
 
   def index
     questions = ProfileQuestion.all

@@ -1,5 +1,5 @@
 class NewsitemsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate
   
   def index
     render json: Newsitem.all

@@ -34,16 +34,21 @@ module.exports = function(environment) {
     };
 
     ENV["simple-auth"] = {
-      crossOriginWhitelist: [ENV.apiHost],
       routeAfterAuthentication: 'index',
-      authorizer: 'authorizer:custom'
+      authenticationRoute: 'login',
+      routeIfAlreadyAuthenticated: 'index'
+    };
+
+    ENV['auth0-ember-simple-auth'] = {
+      clientID: "i3223lIqqYk2UQ4WpkMRHd6Dg4XWxr2E",
+      domain: "solsberg.auth0.com"
     };
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-eval' 'unsafe-inline'", // Allow scripts from https://cdn.mxpnl.com
-      'font-src': "'self'", // Allow fonts to be loaded from http://fonts.gstatic.com
-      'connect-src': "'self' " + ENV.apiHost, // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
+      'script-src': "'self' 'unsafe-eval' 'unsafe-inline' https://*.auth0.com", // Allow scripts from https://cdn.mxpnl.com
+      'font-src': "'self' data: https://cdn.auth0.com", // Allow fonts to be loaded from http://fonts.gstatic.com
+      'connect-src': "'self' solsberg.auth0.com " + ENV.apiHost, // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
       'img-src': "'self' data: http://www.gravatar.com",
       'style-src': "'self' 'unsafe-inline'", // Allow inline styles and loaded CSS from http://fonts.googleapis.com 
       'media-src': "'self'"

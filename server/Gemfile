@@ -18,8 +18,7 @@ gem 'spring',        group: :development
 
 gem 'active_model_serializers', '~> 0.8.0'
 
-gem 'devise_token_auth', '~> 0.1.31'
-gem 'omniauth'
+gem 'knock', '~> 1.2'
 
 gem 'rack-cors', :require => 'rack/cors'
 

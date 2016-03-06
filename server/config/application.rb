@@ -32,7 +32,7 @@ module Commonsapi
         origins 'localhost:4200'
         resource '*', 
             :headers => :any, 
-            :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+            :expose  => ['Authorization'],
             :methods => [:get, :post, :put, :delete, :options]
       end
     end

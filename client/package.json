@@ -49,5 +49,8 @@
     "ember-sinon": "0.1.0",
     "loader.js": "^4.0.0",
     "moment": "^2.8.4"
+  },
+  "dependencies": {
+    "auth0-ember-simple-auth": "git://github.com/auth0/auth0-ember-simple-auth.git"
   }
 }

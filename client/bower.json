@@ -12,6 +12,8 @@
     "lodash": "~3.7.0",
     "sinonjs": "~1.14.1",
     "blueimp-md5": "~1.1.0",
-    "Faker": "~3.0.0"
+    "Faker": "~3.0.0",
+    "auth0-lock": "^7.10.2",
+    "jsrsasign": "^5.0.1"
   }
 }
