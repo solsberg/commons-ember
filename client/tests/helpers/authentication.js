@@ -4,28 +4,20 @@ import { currentSession, authenticateSession, invalidateSession } from 'commons/
 var authenticationHelpers = function(){
   Ember.Test.registerAsyncHelper('fakeLogin',
     function(app, user) {
-      // // var container = app.__container__;
-      // var session = container.lookup('simple-auth-session:main');
-      // session.set('isAuthenticated', true);
-      // session.set('data', {authenticated: {user: user}});
-      authenticateSession(app, {user: user, auth_info: {}});
+      user.user_id = user.uid;
+      authenticateSession(app, {profile: user});
+      currentSession(app).set('isRegistered', true);
     }
   );
 
   Ember.Test.registerAsyncHelper('fakeLogout',
     function(app) {
-      // var container = app.__container__;
-      // var session = container.lookup('simple-auth-session:main');
-      // session.set('isAuthenticated', false);
-      // session.set('data', null);
       invalidateSession(app);
     }
   );
 
   Ember.Test.registerAsyncHelper('logout',
     function(app) {
-      // var container = app.__container__;
-      // var session = container.lookup('simple-auth-session:main');
       var session = currentSession(app);
       if (session.get('isAuthenticated')){
         session.invalidate();

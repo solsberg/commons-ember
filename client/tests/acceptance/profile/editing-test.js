@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'commons/tests/helpers/start-app';
-import { authenticateSession, invalidateSession } from 'commons/tests/helpers/ember-simple-auth';
 
 var application;
 
@@ -16,12 +15,12 @@ var user = {
 module('Acceptance | profile/editing', {
   beforeEach: function() {
     application = startApp();
-    authenticateSession(application, {user: user, auth_info: {}});
     server.create('user', user);
+    fakeLogin(user);
   },
 
   afterEach: function() {
-    invalidateSession(application);
+    fakeLogout();
     andThen(() => Ember.run(application, 'destroy'));
   }
 });

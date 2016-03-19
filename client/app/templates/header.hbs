@@ -15,9 +15,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        {{#if session.isRegistered}}
         <li class="{{navbar-link-class 'about' currentRouteName}}">{{link-to 'About JMR Commons' 'about' class='about active'}}</li>
         <li class="{{navbar-link-class 'news' currentRouteName}}">{{link-to 'News & Needs' 'news' class='news'}}</li>
         <li class="{{navbar-link-class 'user' currentRouteName}}">{{link-to 'Members' 'users' class='members'}}</li>
+        {{/if}}
 {{!--         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -43,7 +45,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.username}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+            {{#if session.isRegistered}}
             <li>{{link-to 'Profile' 'user.profile' current_user.username class='profile'}}</li>
+            {{/if}}
             <li><a href="" {{action 'logout'}}>Sign out</a></li>
 {{!--             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>

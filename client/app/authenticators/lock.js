@@ -10,7 +10,8 @@ export default Base.extend({
         url: config.authHost + '/auth/sign_in',
         data: data.profile,
         headers: {'Authorization': data.jwt}
-      }).then(function(){
+      }).then(function(response){
+        data.model = response.user;
         resolve(data);
       }, function(xhr) {
         reject(xhr.responseJSON || xhr.responseText);

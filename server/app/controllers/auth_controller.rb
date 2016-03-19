@@ -4,10 +4,10 @@ class AuthController < ApplicationController
 
     user = User.find_by(uid: params[:user_id])
     if user.nil?
-      User.create auth_params.merge({:provider => "auth0"})
+      user = User.create auth_params.merge({:provider => "auth0"})
     end
 
-    render json: {:success => true}
+    render json: user
   end
 
 private

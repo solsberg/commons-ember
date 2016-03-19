@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  
-  resources :users, only: [:index, :view] do
+
+  resources :users, only: [:index, :view, :update] do
     resources :profile_responses, only: [:index]
   end
   resources :profile_responses, only: [:create, :update, :destroy]

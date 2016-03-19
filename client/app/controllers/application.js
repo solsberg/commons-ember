@@ -5,5 +5,5 @@ export default Ember.Controller.extend({
 
   current_user: Ember.computed(function(){
     return this.get('session.data').authenticated.profile;
-  })
+  }),
 });

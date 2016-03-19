@@ -19,6 +19,17 @@ module.exports = function(environment) {
     }
   };
 
+  ENV["simple-auth"] = {
+    routeAfterAuthentication: 'index',
+    authenticationRoute: 'login',
+    routeIfAlreadyAuthenticated: 'index'
+  };
+
+  ENV['auth0-ember-simple-auth'] = {
+    clientID: "i3223lIqqYk2UQ4WpkMRHd6Dg4XWxr2E",
+    domain: "solsberg.auth0.com"
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -31,17 +42,6 @@ module.exports = function(environment) {
 
     ENV["ember-cli-mirage"] = {
       enabled: false
-    };
-
-    ENV["simple-auth"] = {
-      routeAfterAuthentication: 'index',
-      authenticationRoute: 'login',
-      routeIfAlreadyAuthenticated: 'index'
-    };
-
-    ENV['auth0-ember-simple-auth'] = {
-      clientID: "i3223lIqqYk2UQ4WpkMRHd6Dg4XWxr2E",
-      domain: "solsberg.auth0.com"
     };
 
     ENV.contentSecurityPolicy = {
