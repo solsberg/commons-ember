@@ -13,10 +13,9 @@ export default Ember.Component.extend({
         prefix = this.get('prefix');
     return data.map((info, idx) => {
       return {
+        data: info,
         title: info[this.get('title_key')],
-        data: info[this.get('tab_data_key')],
-        dom_id: `${prefix}-${idx + 1}`,
-        dom_href: `#${prefix}-${idx + 1}`
+        dom_id: `${prefix}-${idx + 1}`
       };
     });
   })

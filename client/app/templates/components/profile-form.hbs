@@ -1,6 +1,6 @@
 <form>
-{{#tab-view title_key="title" tab_data_key="fields" data=profile.fields_by_section prefix="section" as |fields|}}
-  {{#each fields as |field|}}
+{{#tab-view data=profile.fields_by_section title_key="title" prefix="section" as |section|}}
+  {{#each section.fields as |field|}}
     {{profile-field question=field.question response=field.response register="register_field" action="editedField"}}
   {{/each}}
 {{/tab-view}}

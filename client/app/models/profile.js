@@ -69,8 +69,6 @@ export default Ember.Object.extend({
       field.set('response', response);
     }
     response.set('text', text);
-
-    console.log(`edited question ${question.get('id')}; new value: ${new_value}`);
   },
 
   save: function(){
