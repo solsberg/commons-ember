@@ -2,22 +2,25 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 // import Ember from 'ember';
 
-moduleForComponent('user-avatar', 'Unit | Component | user avatar', {
+moduleForComponent('user-avatar', 'Integration | Component | user avatar', {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
   integration: true,
 
-  // setup: function () {
-  //   this.registry.register('service:-routing', Ember.Object.extend({
-  //     availableRoutes: function() { return ['index']; },
-  //     hasRoute: function(name) { return name === 'index'; },
-  //     isActiveForRoute: function() { return true; },
-  //     generateURL: function() { return "/"; }
-  //   }));
-  // }
+  setup: function () {
+    // const router = this.container.lookup('router:main');
+    // router.startRouting(true);
+    
+    // this.registry.register('service:-routing', Ember.Object.extend({
+    //   availableRoutes: function() { return ['index']; },
+    //   hasRoute: function(name) { return name === 'index'; },
+    //   isActiveForRoute: function() { return true; },
+    //   generateURL: function() { return "/"; }
+    // }));
+  }
 });
 
-test('it renders', function(assert) {
+test('it renders a link', function(assert) {
   this.set('user', {
     email: "user@example.com",
     profile: {}
@@ -44,6 +47,6 @@ test('it contains a gravatar image', function(assert) {
 //     profile: {}
 //   });
 //   this.render(hbs`{{user-avatar user=this.user}}`);
-//   console.log("***" + this.$('a').parent()ph.html() + "???");
+//   console.log("***" + this.$('a').parent().html() + "???");
 //   assert.ok(this.$('a').attr("href").match(/\/members\/thisuser\/profile/i));
 // });
